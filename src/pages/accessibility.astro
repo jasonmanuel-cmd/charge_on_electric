@@ -1,0 +1,18 @@
+---
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { business } from "../config/business";
+const contact = business.phone ? `call ${business.phone.display}` : business.email ? `email ${business.email}` : "use our contact page";
+---
+<LegalLayout title="Accessibility" slug="accessibility" updated="September 28, 2026" description="Charge On Electric's commitment to an accessible website.">
+  <p>{business.legalName} wants everyone to be able to use this website. We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.2 Level AA.</p>
+  <h2>What we've done</h2>
+  <ul>
+    <li>Keyboard navigation for menus, forms, and FAQ sections, with visible focus indicators.</li>
+    <li>Labeled form fields with error messages connected to each field.</li>
+    <li>High-contrast text and buttons, and status messages that don't rely on color alone.</li>
+    <li>Reduced motion when your device requests it.</li>
+    <li>Text alternatives for meaningful images.</li>
+  </ul>
+  <h2>Need help or found a barrier?</h2>
+  <p>If anything on this site is difficult to use, please <a href="/contact">contact us</a> or {contact}. We'll help you with your request and work to fix the problem.</p>
+</LegalLayout>

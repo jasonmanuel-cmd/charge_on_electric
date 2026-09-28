@@ -1,0 +1,58 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import { business } from "../config/business";
+---
+<BaseLayout
+  title="Thank You | Charge On Electric"
+  description="We received your request. Here's what happens next."
+  noindex
+>
+  <section class="relative overflow-hidden pt-36 pb-24 sm:pt-44">
+    <div class="grid-bg pointer-events-none absolute inset-0"></div>
+    <div class="pointer-events-none absolute left-1/2 top-10 h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-cyan/20 blur-[130px]"></div>
+    <div class="container-x relative max-w-3xl text-center">
+      <div class="mx-auto grid size-20 place-items-center rounded-full border border-glow/40 bg-electric/15 text-glow shadow-[0_0_60px_-10px_rgb(17_181_228/0.9)]">
+        <Icon name="check" class="size-10" />
+      </div>
+      <h1 class="chrome-text mt-8 text-4xl font-extrabold sm:text-5xl"><span data-greeting>Request received.</span></h1>
+      <p class="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted">
+        Thanks for contacting {business.name}. We'll review your project details and reach out using your preferred contact method.{business.responsePromise ? ` ${business.responsePromise}` : ""}
+      </p>
+
+      <div class="mt-12 grid gap-5 text-left sm:grid-cols-3">
+        {[
+          { icon: "clipboard", title: "We review", body: "We look over your property details, service needs, and any photos you sent." },
+          { icon: "phone", title: "We reach out", body: "Expect a call, text, or email to talk through the project and next steps." },
+          { icon: "file", title: "You get a clear scope", body: "A straightforward explanation of the recommended path and estimate." },
+        ].map((s, i) => (
+          <div class="card p-6">
+            <span class="text-xs font-bold text-glow tabular">STEP {i + 1}</span>
+            <Icon name={s.icon as any} class="mt-3 size-6 text-glow" />
+            <h2 class="mt-3 font-bold text-white">{s.title}</h2>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted">{s.body}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="card mt-8 flex flex-col items-center gap-4 p-6 text-left sm:flex-row">
+        <Icon name="camera" class="size-8 shrink-0 text-glow" />
+        <p class="text-muted"><span class="font-semibold text-white">Didn't send photos?</span> When we reach out, replying with photos of your electrical panel and the project area helps us prepare for the next step.</p>
+      </div>
+
+      <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/" class="btn btn-ghost">Back to Home</a>
+        {business.social.instagram && <a href={business.social.instagram} target="_blank" rel="noopener" class="btn btn-ghost"><Icon name="instagram" class="size-4" /> See Our Work</a>}
+        {business.phone && <a href={`tel:${business.phone.e164}`} class="btn btn-primary" data-track="click_to_call"><Icon name="phone" class="size-4" /> Call {business.phone.display}</a>}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  try {
+    const last = JSON.parse(sessionStorage.getItem("coe-last-lead") || "null");
+    const el = document.querySelector("[data-greeting]");
+    if (last?.name && el) el.textContent = `Thanks, ${String(last.name).slice(0, 40)}. Request received.`;
+  } catch {}
+</script>

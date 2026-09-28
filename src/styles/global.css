@@ -1,0 +1,167 @@
+@import "tailwindcss";
+@import "@fontsource-variable/manrope";
+@import "@fontsource-variable/inter";
+
+@theme {
+  --font-display: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-void: #04080f;
+  --color-deep: #07111f;
+  --color-navy: #0b1f33;
+  --color-panel: #0d1a2b;
+  --color-panel-2: #112238;
+  --color-line: rgb(148 190 255 / 0.13);
+  --color-electric: #1677ff;
+  --color-cyan: #11b5e4;
+  --color-glow: #7fe3ff;
+  --color-ink: #e9eff7;
+  --color-muted: #a3b2c6;
+  --color-success: #0f9d70;
+  --color-warning: #f59e0b;
+  --color-danger: #ff6b6b;
+
+  --animate-current: current 3.2s linear infinite;
+  --animate-pulse-glow: pulse-glow 3s ease-in-out infinite;
+  --animate-float: float 7s ease-in-out infinite;
+
+  @keyframes current {
+    to { stroke-dashoffset: -400; }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-void text-ink font-sans antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  h1, h2, h3, h4 {
+    @apply font-display text-balance tracking-tight;
+  }
+  p { @apply text-pretty; }
+  ::selection { background: rgb(22 119 255 / 0.45); color: white; }
+  :focus-visible {
+    outline: 2px solid var(--color-glow);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .tabular { font-variant-numeric: tabular-nums; }
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+
+  /* Metallic chrome headline treatment, echoing the logo */
+  .chrome-text {
+    background: linear-gradient(180deg, #ffffff 0%, #dbe7f5 38%, #8fa6bf 52%, #eef5ff 70%, #b9cbe0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* background-clip:text clips glyph descenders at tight line-heights */
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+  }
+  .electric-text {
+    background: linear-gradient(90deg, var(--color-glow), var(--color-electric));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.22em] text-glow;
+  }
+
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 py-3 font-display text-[15px] font-bold transition duration-200 select-none;
+  }
+  .btn-primary {
+    @apply text-white;
+    background: linear-gradient(180deg, #2f8bff 0%, #1266e0 100%);
+    box-shadow: 0 0 0 1px rgb(127 227 255 / 0.35) inset, 0 10px 30px -8px rgb(22 119 255 / 0.7);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 0 0 1px rgb(127 227 255 / 0.6) inset, 0 14px 40px -8px rgb(17 181 228 / 0.85);
+    transform: translateY(-1px);
+  }
+  .btn-ghost {
+    @apply border border-line bg-white/[0.03] text-ink hover:border-glow/50 hover:bg-white/[0.07];
+  }
+
+  .card {
+    @apply relative rounded-2xl border border-line bg-panel/70 backdrop-blur-sm;
+  }
+  .card-hover {
+    @apply transition duration-300 hover:-translate-y-1 hover:border-glow/40;
+  }
+  .card-hover:hover { box-shadow: 0 20px 50px -20px rgb(17 181 228 / 0.35); }
+
+  .section { @apply py-20 sm:py-28; }
+
+  /* Subtle blueprint grid */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgb(127 227 255 / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(127 227 255 / 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  }
+
+  .glow-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-cyan), transparent);
+  }
+
+  /* Form controls */
+  .field-label { @apply mb-1.5 block text-sm font-semibold text-ink; }
+  .field-hint { @apply mt-1 text-xs text-muted; }
+  .input {
+    @apply block w-full min-h-12 rounded-xl border border-line bg-deep px-4 py-3 text-base text-ink placeholder:text-muted/60 transition;
+  }
+  .input:focus { @apply border-glow/70 outline-none; box-shadow: 0 0 0 3px rgb(127 227 255 / 0.18); }
+  .input[aria-invalid="true"] { @apply border-danger; }
+  select.input { @apply appearance-none pr-10; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a3b2c6' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.9rem center; background-size: 1.1rem; }
+  .choice {
+    @apply flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-line bg-deep px-4 py-3 text-sm font-medium transition hover:border-glow/40;
+  }
+  .choice:has(input:checked) { @apply border-glow/80 bg-electric/10; }
+  .choice:has(input:focus-visible) { outline: 2px solid var(--color-glow); outline-offset: 2px; }
+  .choice input { @apply size-4 accent-electric; }
+
+  .prose-legal h2 { @apply mt-10 mb-3 text-xl font-bold text-ink; }
+  .prose-legal p, .prose-legal li { @apply leading-relaxed text-muted; }
+  .prose-legal ul { @apply my-3 list-disc space-y-1 pl-6; }
+  .prose-legal a { @apply text-glow underline underline-offset-4; }
+}
+
+/* Scroll reveal: content is visible by default; JS opts elements in. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js [data-reveal].is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .js [data-reveal] { opacity: 1; transform: none; }
+}

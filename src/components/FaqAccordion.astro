@@ -1,0 +1,19 @@
+---
+import Icon from "./Icon.astro";
+import type { FAQ } from "../data/faqs";
+interface Props { items: FAQ[]; }
+const { items } = Astro.props;
+---
+<div class="divide-y divide-line overflow-hidden rounded-2xl border border-line bg-panel/60">
+  {items.map((f) => (
+    <details class="group" data-faq={f.id}>
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-6 px-6 py-5 text-left font-display text-lg font-bold text-white hover:bg-white/[0.03] [&::-webkit-details-marker]:hidden">
+        <h3 class="text-base sm:text-lg">{f.question}</h3>
+        <span class="grid size-8 shrink-0 place-items-center rounded-full border border-line text-glow transition-transform duration-300 group-open:rotate-180">
+          <Icon name="chevron" class="size-4" />
+        </span>
+      </summary>
+      <div class="px-6 pb-6 leading-relaxed text-muted">{f.answer}</div>
+    </details>
+  ))}
+</div>

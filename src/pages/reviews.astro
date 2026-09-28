@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import ProofSection from "../components/ProofSection.astro";
+import FinalCta from "../components/FinalCta.astro";
+---
+<BaseLayout
+  title="Reviews | Charge On Electric, Bakersfield"
+  description="Genuine customer reviews of Charge On Electric's EV charger installation and electrical work."
+  breadcrumbs={[{ name: "Reviews", href: "/reviews" }]}
+  view="view_reviews"
+>
+  <PageHero
+    compact
+    eyebrow="Reviews"
+    title="Trusted When The Work Matters."
+    subtitle="We only display genuine reviews from real customers, with a link to the original wherever one exists."
+    breadcrumbs={[{ name: "Reviews", href: "/reviews" }]}
+  />
+  <ProofSection show="reviews" limit={60} />
+  <FinalCta />
+</BaseLayout>

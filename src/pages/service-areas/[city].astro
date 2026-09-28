@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import ServiceCard from "../../components/ServiceCard.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import FaqAccordion from "../../components/FaqAccordion.astro";
+import Icon from "../../components/Icon.astro";
+import FinalCta from "../../components/FinalCta.astro";
+import { publishedAreas, type ServiceArea } from "../../data/serviceAreas";
+import { getService, type ServicePage } from "../../data/services";
+import { faqs } from "../../data/faqs";
+import { faqSchema } from "../../lib/schema";
+
+export function getStaticPaths() {
+  return publishedAreas.map((a) => ({ params: { city: a.slug }, props: { a } }));
+}
+const { a } = Astro.props as { a: ServiceArea };
+const svc = a.services.map(getService).filter((s): s is ServicePage => !!s && s.status === "published");
+const areaFaqs = faqs.filter((f) => ["panel-support", "permit", "cost", "what-to-send"].includes(f.id));
+const crumbs = [{ name: "Service Areas", href: "/service-areas" }, { name: a.city, href: `/service-areas/${a.slug}` }];
+---
+<BaseLayout
+  title={`EV Charger Installation & Electrician in ${a.city}, ${a.region} | Charge On Electric`}
+  description={`EV charger installation, electrical panel upgrades, commercial EV charging, and electrical services in ${a.city}, ${a.region} from Charge On Electric.`}
+  breadcrumbs={crumbs}
+  view="view_service_area"
+  schema={[faqSchema(areaFaqs)]}
+>
+  <PageHero
+    eyebrow={`${a.city}, ${a.region}`}
+    title={`EV Charging & Electrical Work in ${a.city}`}
+    breadcrumbs={crumbs}
+    primary={{ label: "Get an Estimate", href: "/request-estimate" }}
+    secondary={{ label: "Check My EV Readiness", href: "/ev-readiness-check" }}
+  />
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+      <div class="space-y-5 text-lg leading-relaxed text-muted" data-reveal>
+        {a.intro.map((p) => <p>{p}</p>)}
+      </div>
+      <aside class="card h-fit p-7" data-reveal>
+        <Icon name="pin" class="size-6 text-glow" />
+        <h2 class="mt-4 text-lg font-bold text-white">Coverage</h2>
+        <p class="mt-2 leading-relaxed text-muted">{a.coverageNote}</p>
+      </aside>
+    </div>
+  </section>
+  <section class="section border-y border-line bg-deep/50">
+    <div class="container-x">
+      <SectionHeading eyebrow="Services" title={`What we do in ${a.city}`} />
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        {svc.map((s, i) => <ServiceCard service={s} index={i} />)}
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+      <SectionHeading eyebrow="FAQ" title={`Common questions from ${a.city} homeowners`} />
+      <div data-reveal><FaqAccordion items={areaFaqs} /></div>
+    </div>
+  </section>
+  <FinalCta />
+</BaseLayout>

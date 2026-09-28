@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import FinalCta from "../../components/FinalCta.astro";
+import { publishedProjects, type Project } from "../../data/proof";
+
+export function getStaticPaths() {
+  return publishedProjects.map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props as { p: Project };
+const crumbs = [{ name: "Projects", href: "/projects" }, { name: p.title, href: `/projects/${p.slug}` }];
+const sections = [
+  { h: "The Need", b: p.need },
+  { h: "The Assessment", b: p.assessment },
+  { h: "The Work", b: p.work },
+  { h: "The Result", b: p.result },
+];
+---
+<BaseLayout title={`${p.title}, ${p.area} | Charge On Electric`} description={`${p.title} in ${p.area}. ${p.work}`.slice(0, 158)} breadcrumbs={crumbs} view="view_project">
+  <PageHero compact eyebrow={p.area} title={p.title} breadcrumbs={crumbs} />
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+      <div class="grid gap-4 sm:grid-cols-2">
+        {p.images.map((img, i) => (
+          <img src={img.src} alt={img.alt} loading={i === 0 ? "eager" : "lazy"} class:list={["w-full rounded-2xl border border-line object-cover", i === 0 && "sm:col-span-2"]} />
+        ))}
+      </div>
+      <div class="space-y-8">
+        {sections.map((s) => (
+          <div><h2 class="text-xl font-bold text-white">{s.h}</h2><p class="mt-2 leading-relaxed text-muted">{s.b}</p></div>
+        ))}
+        <a href="/request-estimate" class="btn btn-primary">Start a Similar Project</a>
+      </div>
+    </div>
+  </section>
+  <FinalCta />
+</BaseLayout>

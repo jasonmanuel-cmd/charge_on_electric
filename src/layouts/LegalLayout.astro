@@ -1,0 +1,15 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+interface Props { title: string; description: string; slug: string; updated: string }
+const { title, description, slug, updated } = Astro.props;
+const crumbs = [{ name: title, href: `/${slug}` }];
+---
+<BaseLayout title={`${title} | Charge On Electric`} description={description} breadcrumbs={crumbs}>
+  <PageHero compact title={title} subtitle={`Last updated ${updated}`} breadcrumbs={crumbs} />
+  <section class="section pt-12">
+    <div class="container-x prose-legal max-w-3xl">
+      <slot />
+    </div>
+  </section>
+</BaseLayout>

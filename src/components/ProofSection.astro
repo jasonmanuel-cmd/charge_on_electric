@@ -1,0 +1,99 @@
+---
+// Projects + reviews. Renders real content when it exists, otherwise an honest,
+// non-fake empty state that still moves the visitor forward.
+import Icon from "./Icon.astro";
+import SectionHeading from "./SectionHeading.astro";
+import { publishedProjects, publishedReviews } from "../data/proof";
+import { business } from "../config/business";
+
+interface Props { show?: "projects" | "reviews" | "both"; limit?: number }
+const { show = "both", limit = 3 } = Astro.props;
+const projects = publishedProjects.slice(0, limit);
+const reviews = publishedReviews.slice(0, limit);
+---
+{(show === "projects" || show === "both") && (
+  <section class="section relative">
+    <div class="container-x">
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <SectionHeading eyebrow="Proof of Work" title="Real Work. Real Results." intro="Electrical work is easier to trust when you can see the details. Every property has different constraints, and the goal is the right solution for the property in front of us." />
+        {projects.length > 0 && <a href="/projects" class="btn btn-ghost shrink-0" data-reveal>View All Projects <Icon name="arrow" class="size-4" /></a>}
+      </div>
+
+      {projects.length > 0 ? (
+        <div class="mt-12 grid gap-6 md:grid-cols-3">
+          {projects.map((p, i) => (
+            <a href={`/projects/${p.slug}`} class="card card-hover group overflow-hidden" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+              {p.images[0] && <img src={p.images[0].src} alt={p.images[0].alt} loading="lazy" class="aspect-[4/3] w-full object-cover" />}
+              <div class="p-6">
+                <p class="text-xs font-bold uppercase tracking-widest text-glow">{p.area}</p>
+                <h3 class="mt-2 text-lg font-bold text-white">{p.title}</h3>
+                <p class="mt-2 text-sm text-muted">{p.work}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div class="mt-12 grid gap-6 lg:grid-cols-[1.2fr_1fr]" data-reveal>
+          <div class="card relative overflow-hidden p-8 sm:p-10">
+            <div class="grid-bg pointer-events-none absolute inset-0"></div>
+            <div class="relative">
+              <span class="grid size-12 place-items-center rounded-xl bg-electric/15 text-glow"><Icon name="camera" class="size-6" /></span>
+              <h3 class="mt-6 text-2xl font-bold text-white">Project gallery coming soon</h3>
+              <p class="mt-3 max-w-lg leading-relaxed text-muted">
+                We're documenting completed installations with customer permission. We'll only post real projects, with real photos and details. In the meantime, see recent work on our Instagram.
+              </p>
+              {business.social.instagram && (
+                <a href={business.social.instagram} target="_blank" rel="noopener" class="btn btn-ghost mt-7"><Icon name="instagram" class="size-4" /> See Our Work on Instagram</a>
+              )}
+            </div>
+          </div>
+          <div class="card p-8 sm:p-10">
+            <h3 class="text-lg font-bold text-white">What every case study will show</h3>
+            <ul class="mt-5 space-y-4">
+              {["The Need: what the customer wanted to solve", "The Assessment: what we checked before recommending a path", "The Work: the agreed scope, completed", "The Result: how it fits the property and routine"].map((t) => (
+                <li class="flex gap-3 text-muted"><Icon name="check" class="mt-0.5 size-5 shrink-0 text-glow" />{t}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+{(show === "reviews" || show === "both") && (
+  <section class="section relative border-t border-line bg-deep/50">
+    <div class="container-x">
+      <SectionHeading eyebrow="Reviews" title="Trusted When The Work Matters." intro="Electrical projects affect your home, your business, your time, and your peace of mind. We aim to earn trust through communication, professionalism, and work customers feel confident recommending." />
+      {reviews.length > 0 ? (
+        <div class="mt-12 grid gap-6 md:grid-cols-3">
+          {reviews.map((r, i) => (
+            <figure class="card flex h-full flex-col p-7" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+              <div class="flex gap-1 text-warning" aria-label={`${r.rating} out of 5 stars`}>
+                {Array.from({ length: 5 }).map((_, s) => <Icon name="star" class={`size-4 ${s < Math.round(r.rating) ? "fill-current" : "opacity-30"}`} />)}
+              </div>
+              <blockquote class="mt-4 flex-1 leading-relaxed text-ink/90">"{r.text}"</blockquote>
+              <figcaption class="mt-6 text-sm text-muted">
+                <span class="font-semibold text-white">{r.reviewerDisplayName}</span> · {r.platform}
+                {r.url && <a href={r.url} target="_blank" rel="noopener" class="ml-2 text-glow underline underline-offset-4">View original</a>}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      ) : (
+        <div class="card mt-12 flex flex-col items-start gap-6 p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10" data-reveal>
+          <div class="flex items-start gap-4">
+            <span class="grid size-12 shrink-0 place-items-center rounded-xl bg-warning/15 text-warning"><Icon name="star" class="size-6" /></span>
+            <div>
+              <h3 class="text-xl font-bold text-white">Worked with Charge On Electric?</h3>
+              <p class="mt-2 max-w-xl text-muted">Your feedback helps future homeowners and businesses choose a contractor with confidence. We only display genuine reviews from real customers.</p>
+            </div>
+          </div>
+          {business.reviews.leaveReviewUrl
+            ? <a href={business.reviews.leaveReviewUrl} target="_blank" rel="noopener" class="btn btn-primary shrink-0">Leave a Review</a>
+            : <a href="/contact" class="btn btn-ghost shrink-0">Share Your Feedback</a>}
+        </div>
+      )}
+    </div>
+  </section>
+)}

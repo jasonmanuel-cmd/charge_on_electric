@@ -1,0 +1,22 @@
+---
+import Icon from "./Icon.astro";
+import type { ServicePage } from "../data/services";
+interface Props { service: ServicePage; index?: number }
+const { service, index = 0 } = Astro.props;
+---
+<a
+  href={`/${service.slug}`}
+  class="card card-hover group flex h-full flex-col overflow-hidden p-7"
+  data-reveal
+  style={`--reveal-delay:${index * 80}ms`}
+>
+  <div class="pointer-events-none absolute -right-16 -top-16 size-44 rounded-full bg-electric/0 blur-3xl transition duration-500 group-hover:bg-electric/25"></div>
+  <span class="relative grid size-12 place-items-center rounded-xl border border-glow/25 bg-electric/10 text-glow shadow-[0_0_24px_-6px_rgb(17_181_228/0.6)]">
+    <Icon name={service.icon} class="size-6" />
+  </span>
+  <h3 class="relative mt-6 text-xl font-bold text-white">{service.cardTitle}</h3>
+  <p class="relative mt-3 flex-1 leading-relaxed text-muted">{service.cardBlurb}</p>
+  <span class="relative mt-6 inline-flex items-center gap-2 text-sm font-bold text-glow">
+    Learn more <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" />
+  </span>
+</a>

@@ -1,0 +1,48 @@
+---
+// DRAFT: have this reviewed by counsel before launch (CCPA/CPRA, CAN-SPAM, TCPA).
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { business } from "../config/business";
+const contactLine = business.email ? `by email at ${business.email}` : "through the contact form on this website";
+---
+<LegalLayout title="Privacy Policy" slug="privacy-policy" updated="September 28, 2026" description="How Charge On Electric Inc. collects, uses, and protects information submitted through this website.">
+  <p>This Privacy Policy explains how {business.legalName} ("we," "us") collects, uses, and shares information when you visit this website or submit a request.</p>
+
+  <h2>Information we collect</h2>
+  <ul>
+    <li><strong>Information you provide:</strong> name, phone number, email, property address, project details, business details, and any photos or files you upload.</li>
+    <li><strong>Attribution information:</strong> the page you arrived on, the referring website, and campaign parameters (such as UTM tags or ad click IDs) present in the link you used.</li>
+    <li><strong>Device and usage information:</strong> browser type, device type, IP address, and, if you accept analytics cookies, how you interact with the site.</li>
+  </ul>
+
+  <h2>How we use information</h2>
+  <ul>
+    <li>To respond to your request, prepare estimates, schedule assessments, and perform work.</li>
+    <li>To contact you by phone, text, or email about your request, as you've agreed.</li>
+    <li>To understand which pages and marketing channels are useful, and to improve the website.</li>
+    <li>To prevent spam and abuse, and to comply with legal obligations.</li>
+  </ul>
+
+  <h2>Text messages</h2>
+  <p>If you opt in to text messages, we'll send messages related to your request. Message frequency varies. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent to receive texts is not a condition of any purchase or service. We do not sell or share your mobile number for others' marketing.</p>
+
+  <h2>Cookies and analytics</h2>
+  <p>With your consent, we use analytics tools (such as Google Analytics via Google Tag Manager, and Microsoft Clarity) to understand site usage. You can accept or decline analytics cookies in the cookie banner and change your choice at any time using "Cookie Preferences" in the footer.</p>
+
+  <h2>How we share information</h2>
+  <p>We share information only with service providers that help us operate the business and website (for example, hosting, database, email, and analytics providers), when required by law, or to protect our rights. <strong>We do not sell your personal information.</strong></p>
+
+  <h2>Retention and security</h2>
+  <p>We keep information as long as needed to respond to your request, perform and support work, and meet legal and accounting obligations. We use reasonable safeguards to protect it. Uploaded files are stored privately and are not publicly accessible.</p>
+
+  <h2>Your California privacy rights</h2>
+  <p>California residents may request to know, access, correct, or delete personal information we hold about them, and may opt out of any sale or sharing of personal information. We will not discriminate against you for exercising these rights. To make a request, contact us {contactLine}.</p>
+
+  <h2>Children</h2>
+  <p>This website is not directed to children under 16, and we do not knowingly collect their information.</p>
+
+  <h2>Changes</h2>
+  <p>We may update this policy from time to time. The "Last updated" date above shows when it last changed.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy? Contact {business.legalName} {contactLine}.</p>
+</LegalLayout>

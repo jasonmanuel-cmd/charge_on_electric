@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import LeadForm from "../components/LeadForm.astro";
+import { business, licenseVisible } from "../config/business";
+
+const contactRows = [
+  business.phone && { icon: "phone", label: "Phone", value: business.phone.display, href: `tel:${business.phone.e164}`, track: "click_to_call" },
+  business.phone && business.smsEnabled && { icon: "message", label: "Text", value: business.phone.display, href: `sms:${business.phone.e164}`, track: "click_to_text" },
+  business.email && { icon: "mail", label: "Email", value: business.email, href: `mailto:${business.email}` },
+  { icon: "pin", label: "Service Area", value: business.serviceAreaStatement },
+  business.hours && { icon: "clock", label: "Hours", value: business.hours },
+  licenseVisible() && { icon: "shield", label: "CSLB License", value: `#${business.license.number}` },
+  business.social.instagram && { icon: "instagram", label: "Instagram", value: "@charge_on_electric", href: business.social.instagram },
+].filter(Boolean) as { icon: any; label: string; value: string; href?: string; track?: string }[];
+---
+<BaseLayout
+  title="Contact Charge On Electric | Bakersfield Electrician"
+  description="Contact Charge On Electric about EV charger installation, panel upgrades, commercial EV charging, or electrical work in Bakersfield."
+  breadcrumbs={[{ name: "Contact", href: "/contact" }]}
+>
+  <section class="relative overflow-hidden pt-32 pb-24 sm:pt-40">
+    <div class="grid-bg pointer-events-none absolute inset-0"></div>
+    <div class="pointer-events-none absolute -top-40 right-0 h-[500px] w-[700px] rounded-full bg-electric/20 blur-[130px]"></div>
+    <div class="container-x relative grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+      <div>
+        <p class="eyebrow"><Icon name="bolt" class="size-3.5" />Contact</p>
+        <h1 class="chrome-text mt-5 text-4xl font-extrabold leading-[1.05] sm:text-5xl">Let's Talk About Your Project.</h1>
+        <p class="mt-5 text-lg leading-relaxed text-muted">Whether you're ready to move forward or simply want to understand your options, start by telling us a little about your property and what you're planning. The more detail you share, the better we can prepare.</p>
+        <ul class="mt-10 space-y-3">
+          {contactRows.map((r) => (
+            <li>
+              {r.href ? (
+                <a href={r.href} class="card card-hover flex items-center gap-4 p-4" data-track={r.track} target={r.href.startsWith("http") ? "_blank" : undefined} rel={r.href.startsWith("http") ? "noopener" : undefined}>
+                  <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-electric/15 text-glow"><Icon name={r.icon} class="size-5" /></span>
+                  <span><span class="block text-xs font-bold uppercase tracking-widest text-muted">{r.label}</span><span class="font-semibold text-white">{r.value}</span></span>
+                </a>
+              ) : (
+                <div class="card flex items-center gap-4 p-4">
+                  <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-electric/15 text-glow"><Icon name={r.icon} class="size-5" /></span>
+                  <span><span class="block text-xs font-bold uppercase tracking-widest text-muted">{r.label}</span><span class="font-semibold text-white">{r.value}</span></span>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+        <div class="mt-8 grid gap-3 sm:grid-cols-2">
+          <a href="/ev-readiness-check" class="btn btn-ghost">EV Readiness Check</a>
+          <a href="/commercial-assessment" class="btn btn-ghost">Commercial Assessment</a>
+        </div>
+      </div>
+      <div><LeadForm variant="estimate" /></div>
+    </div>
+  </section>
+</BaseLayout>

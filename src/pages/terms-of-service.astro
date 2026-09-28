@@ -1,0 +1,26 @@
+---
+// DRAFT: have this reviewed by counsel before launch.
+import LegalLayout from "../layouts/LegalLayout.astro";
+import { business } from "../config/business";
+---
+<LegalLayout title="Terms of Service" slug="terms-of-service" updated="September 28, 2026" description="Terms that apply to use of the Charge On Electric Inc. website.">
+  <p>These terms apply to your use of this website operated by {business.legalName}. By using the site, you agree to them.</p>
+
+  <h2>Informational content</h2>
+  <p>Content on this website is general information about electrical services. It is not a quote, a guarantee of any outcome, or a substitute for an on-site evaluation. Electrical requirements, permits, timelines, and costs depend on each property and jurisdiction.</p>
+
+  <h2>Estimates and work</h2>
+  <p>Submitting a request does not create a contract. Any work is governed by a separate written estimate or agreement between you and {business.legalName}.</p>
+
+  <h2>Your submissions</h2>
+  <p>You agree that information and files you submit are accurate and that you have the right to share them. You grant us permission to use them to respond to your request.</p>
+
+  <h2>Third-party links and brands</h2>
+  <p>This site may link to other websites. We are not responsible for their content. Vehicle and charger brand names are used only to describe compatibility and do not imply endorsement or affiliation unless stated.</p>
+
+  <h2>Limitation of liability</h2>
+  <p>To the extent permitted by law, {business.legalName} is not liable for indirect or consequential damages arising from use of this website.</p>
+
+  <h2>Changes</h2>
+  <p>We may update these terms. Continued use of the site means you accept the updated terms.</p>
+</LegalLayout>
