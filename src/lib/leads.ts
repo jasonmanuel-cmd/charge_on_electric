@@ -87,10 +87,12 @@ export function parseAttribution(raw?: string): Attribution {
   }
 }
 
-/** Service-area check is intentionally conservative: city names from business.areaServed. */
+/** Service-area check: a listed area name in the address, or a 5-digit ZIP with a covered prefix. */
 export function inServiceArea(address: string) {
   const a = address.toLowerCase();
-  return business.areaServed.some((city) => a.includes(city.toLowerCase()));
+  if (business.areaServed.some(({ name }) => a.includes(name.toLowerCase()))) return true;
+  const zips = address.match(/\b\d{5}\b/g) || [];
+  return zips.some((z) => business.serviceZipPrefixes.includes(z.slice(0, 3)));
 }
 
 /** Scoring uses only project signals, never demographic or location-stereotype proxies. */

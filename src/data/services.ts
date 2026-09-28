@@ -38,9 +38,9 @@ export const services: ServicePage[] = [
     cardTitle: "Home EV Charger Installation",
     cardBlurb: "Level 2 charging planned around your panel, your parking spot, and your routine.",
     eyebrow: "EV Charger Installation",
-    seoTitle: "EV Charger Installation in Bakersfield, CA | Charge On Electric",
+    seoTitle: "EV Charger Installation in Los Angeles, CA | Charge On Electric",
     metaDescription:
-      "Level 2 home EV charger installation in Bakersfield. Panel and capacity assessment, dedicated circuits, and clear estimates from Charge On Electric.",
+      "Level 2 home EV charger installation in Los Angeles. Panel and capacity assessment, dedicated circuits, and clear estimates from Charge On Electric.",
     heroHeadline: "Bring EV Charging Home.",
     heroSubheadline:
       "Charging at home makes EV ownership simpler. We start with your electrical system, then build the right Level 2 setup for your garage, driveway, or carport.",
@@ -98,9 +98,9 @@ export const services: ServicePage[] = [
     cardTitle: "Electrical Panel Upgrades",
     cardBlurb: "Capacity for EV charging, remodels, and modern demand, evaluated first and never assumed.",
     eyebrow: "Electrical Panel Upgrades",
-    seoTitle: "Electrical Panel Upgrades in Bakersfield, CA | Charge On Electric",
+    seoTitle: "Electrical Panel Upgrades in Los Angeles, CA | Charge On Electric",
     metaDescription:
-      "Electrical panel assessments and upgrades in Bakersfield for EV charging, remodels, and added loads. Clear explanations and honest recommendations.",
+      "Electrical panel assessments and upgrades in Los Angeles for EV charging, remodels, and added loads. Clear explanations and honest recommendations.",
     heroHeadline: "More Power. More Possibility.",
     heroSubheadline:
       "Your panel is the command center of your property's power. As you add EV chargers, appliances, remodels, or solar, we help you understand whether it needs attention.",
@@ -155,9 +155,9 @@ export const services: ServicePage[] = [
     cardTitle: "Commercial EV Charging",
     cardBlurb: "Charging infrastructure for workplaces, multifamily, retail, and fleets, planned for growth.",
     eyebrow: "Commercial EV Charging",
-    seoTitle: "Commercial EV Charging Installation in Bakersfield | Charge On Electric",
+    seoTitle: "Commercial EV Charging Installation in Los Angeles | Charge On Electric",
     metaDescription:
-      "Commercial EV charging for businesses, multifamily properties, retail centers, and fleets in Bakersfield. Site assessments and practical project planning.",
+      "Commercial EV charging for businesses, multifamily properties, retail centers, and fleets in Los Angeles. Site assessments and practical project planning.",
     heroHeadline: "Prepare Your Property For What's Next.",
     heroSubheadline:
       "Commercial charging is more than equipment selection. It's power availability, site conditions, user needs, and room to grow. We help you start with the right questions.",
@@ -217,9 +217,9 @@ export const services: ServicePage[] = [
     cardTitle: "Electrical Repairs & Improvements",
     cardBlurb: "Troubleshooting, dedicated circuits, outlets, and lighting for homes and businesses.",
     eyebrow: "Residential & Commercial Electrical",
-    seoTitle: "Electrical Services in Bakersfield, CA | Charge On Electric",
+    seoTitle: "Electrical Services in Los Angeles, CA | Charge On Electric",
     metaDescription:
-      "Residential and commercial electrical services in Bakersfield: repairs, troubleshooting, dedicated circuits, outlets, and lighting from Charge On Electric.",
+      "Residential and commercial electrical services in Los Angeles: repairs, troubleshooting, dedicated circuits, outlets, and lighting from Charge On Electric.",
     heroHeadline: "Electrical Work You Can Count On.",
     heroSubheadline:
       "From troubleshooting and repairs to dedicated circuits and lighting, we deliver practical solutions, clean work, and clear next steps.",

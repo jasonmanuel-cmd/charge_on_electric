@@ -37,13 +37,21 @@ export const business = {
   /** Service-area-only businesses should leave street address null. */
   address: {
     street: null as null | string,
-    city: "Bakersfield",
+    city: "Los Angeles",
     region: "CA",
     postalCode: null as null | string,
   },
-  serviceAreaStatement: "Serving Bakersfield and verified surrounding areas",
+  serviceAreaStatement: "Serving Los Angeles and surrounding areas",
   /** Only list places the company can actually quote, permit, and support. */
-  areaServed: ["Bakersfield"],
+  areaServed: [
+    { name: "Los Angeles", type: "City" },
+    { name: "Los Angeles County", type: "AdministrativeArea" },
+  ],
+  /**
+   * ZIP prefixes treated as "in service area" for lead scoring.
+   * 900–918 covers most of Los Angeles County. Narrow this if coverage is smaller.
+   */
+  serviceZipPrefixes: ["900", "901", "902", "903", "904", "905", "906", "907", "908", "910", "911", "912", "913", "914", "915", "916", "917", "918"],
 
   /** e.g. "Mon–Fri 7:00 AM – 5:00 PM" */
   hours: null as null | string,

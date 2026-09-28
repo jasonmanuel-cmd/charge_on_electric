@@ -14,6 +14,10 @@ export default defineConfig({
   output: "static",
   adapter: vercel(),
   trailingSlash: "never",
+  redirects: {
+    // Site briefly launched with the wrong home city.
+    "/service-areas/bakersfield": "/service-areas/los-angeles",
+  },
   integrations: [
     sitemap({
       filter: (page) => !EXCLUDE_FROM_SITEMAP.some((p) => new URL(page).pathname.startsWith(p)),

@@ -12,7 +12,7 @@ export function electricianSchema(site: URL) {
     url: site.href,
     image: new URL("/media/og-image.jpg", site).href,
     logo: new URL("/media/logo.webp", site).href,
-    areaServed: business.areaServed.map((name) => ({ "@type": "City", name })),
+    areaServed: business.areaServed.map(({ name, type }) => ({ "@type": type, name })),
     sameAs: Object.values(business.social).filter(Boolean),
   };
   if (business.phone) data.telephone = business.phone.e164;
@@ -79,6 +79,6 @@ export function serviceSchema(site: URL, s: { name: string; description: string;
     serviceType: s.serviceType,
     url: new URL(`/${s.slug}`, site).href,
     provider: { "@id": new URL("/#business", site).href },
-    areaServed: business.areaServed.map((name) => ({ "@type": "City", name })),
+    areaServed: business.areaServed.map(({ name, type }) => ({ "@type": type, name })),
   };
 }
