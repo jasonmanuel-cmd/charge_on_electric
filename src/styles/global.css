@@ -43,6 +43,9 @@
     color-scheme: dark;
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    /* keep in-page anchors clear of the fixed header */
+    scroll-padding-top: 5.5rem;
   }
   body {
     @apply bg-void text-ink font-sans antialiased;
@@ -62,7 +65,16 @@
 }
 
 @layer components {
-  .container-x { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    /* iPhone landscape: stay clear of the notch / Dynamic Island */
+    padding-left: max(var(--gutter, 1rem), env(safe-area-inset-left));
+    padding-right: max(var(--gutter, 1rem), env(safe-area-inset-right));
+  }
+  @media (min-width: 640px) { .container-x { --gutter: 1.5rem; } }
+  @media (min-width: 1024px) { .container-x { --gutter: 2rem; } }
+  /* Buttons respond instantly on touch (no 300ms delay / double-tap zoom) */
+  a, button, summary, label { touch-action: manipulation; }
 
   /* Metallic chrome headline treatment, echoing the logo */
   .chrome-text {
@@ -86,7 +98,7 @@
   }
 
   .btn {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 py-3 font-display text-[15px] font-bold transition duration-200 select-none;
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 py-3 text-center font-display text-[15px] font-bold transition duration-200 select-none;
   }
   .btn-primary {
     @apply text-white;

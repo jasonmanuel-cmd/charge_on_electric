@@ -6,6 +6,7 @@ import StickyMobileCta from "../components/StickyMobileCta.astro";
 import Analytics from "../components/Analytics.astro";
 import { business } from "../config/business";
 import { electricianSchema, breadcrumbSchema } from "../lib/schema";
+import manropeLatin from "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url";
 
 interface Props {
   title: string;
@@ -40,6 +41,11 @@ const jsonLd = [
     {noindex && <meta name="robots" content="noindex, follow" />}
     <meta name="theme-color" content="#04080f" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="apple-mobile-web-app-title" content="Charge On" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="preload" href={manropeLatin} as="font" type="font/woff2" crossorigin />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <meta property="og:type" content="website" />

@@ -20,11 +20,11 @@ const { eyebrow, title, subtitle, breadcrumbs, primary, secondary, compact = fal
     {breadcrumbs && (
       <nav aria-label="Breadcrumb" class="mb-8">
         <ol class="flex flex-wrap items-center gap-2 text-sm text-muted">
-          <li><a href="/" class="hover:text-white">Home</a></li>
+          <li><a href="/" class="inline-block py-1.5 hover:text-white">Home</a></li>
           {breadcrumbs.map((c, i) => (
             <li class="flex items-center gap-2">
               <span aria-hidden="true" class="text-line">/</span>
-              {i === breadcrumbs.length - 1 ? <span aria-current="page" class="text-ink">{c.name}</span> : <a href={c.href} class="hover:text-white">{c.name}</a>}
+              {i === breadcrumbs.length - 1 ? <span aria-current="page" class="text-ink">{c.name}</span> : <a href={c.href} class="inline-block py-1.5 hover:text-white">{c.name}</a>}
             </li>
           ))}
         </ol>

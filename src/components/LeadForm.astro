@@ -76,12 +76,12 @@ const uid = (n: string) => `${formId}-${n}`;
       <fieldset class="step space-y-5" data-step="0">
         <legend class="mb-6 text-xl font-bold text-white">Your contact details</legend>
         <div class="grid gap-5 sm:grid-cols-2">
-          <div><label class="field-label" for={uid("fn")}>First name <span class="text-glow">*</span></label><input class="input" id={uid("fn")} name="first_name" autocomplete="given-name" required maxlength="80" /></div>
-          <div><label class="field-label" for={uid("ln")}>Last name <span class="text-glow">*</span></label><input class="input" id={uid("ln")} name="last_name" autocomplete="family-name" required maxlength="80" /></div>
-          <div><label class="field-label" for={uid("ph")}>Mobile phone <span class="text-glow">*</span></label><input class="input" id={uid("ph")} name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="[\d\s().+\-]{10,20}" /></div>
-          <div><label class="field-label" for={uid("em")}>Email <span class="text-glow">*</span></label><input class="input" id={uid("em")} name="email" type="email" autocomplete="email" required maxlength="160" /></div>
+          <div><label class="field-label" for={uid("fn")}>First name <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("fn")} name="first_name" autocomplete="given-name" required maxlength="80" /></div>
+          <div><label class="field-label" for={uid("ln")}>Last name <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("ln")} name="last_name" autocomplete="family-name" required maxlength="80" /></div>
+          <div><label class="field-label" for={uid("ph")}>Mobile phone <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("ph")} name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="[0-9\s\(\)\.\+\-]{10,20}" /></div>
+          <div><label class="field-label" for={uid("em")}>Email <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("em")} name="email" type="email" autocomplete="email" required maxlength="160" /></div>
         </div>
-        <div><label class="field-label" for={uid("ad")}>Property address <span class="text-glow">*</span></label><input class="input" id={uid("ad")} name="address" autocomplete="street-address" required maxlength="200" placeholder="Street, city, ZIP" /></div>
+        <div><label class="field-label" for={uid("ad")}>Property address <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("ad")} name="address" autocomplete="street-address" required maxlength="200" placeholder="Street, city, ZIP" /></div>
         <fieldset>
           <legend class="field-label">Preferred contact method <span class="text-glow">*</span></legend>
           <div class="grid grid-cols-3 gap-3">
@@ -121,7 +121,7 @@ const uid = (n: string) => `${formId}-${n}`;
     <>
       <fieldset class="step space-y-5" data-step="0">
         <legend class="mb-6 text-xl font-bold text-white">Tell us about your home</legend>
-        <div><label class="field-label" for={uid("ad")}>Property address <span class="text-glow">*</span></label><input class="input" id={uid("ad")} name="address" autocomplete="street-address" required maxlength="200" placeholder="Street, city, ZIP" /></div>
+        <div><label class="field-label" for={uid("ad")}>Property address <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("ad")} name="address" autocomplete="street-address" required maxlength="200" placeholder="Street, city, ZIP" /></div>
         <fieldset>
           <legend class="field-label">Home type <span class="text-glow">*</span></legend>
           <div class="grid gap-3 sm:grid-cols-2">
@@ -138,7 +138,7 @@ const uid = (n: string) => `${formId}-${n}`;
             ))}
           </div>
         </fieldset>
-        <div><label class="field-label" for={uid("veh")}>Vehicle make / model <span class="font-normal text-muted">(optional)</span></label><input class="input" id={uid("veh")} name="vehicle" maxlength="120" placeholder="e.g. Tesla Model Y, Ford F-150 Lightning" /></div>
+        <div><label class="field-label" for={uid("veh")}>Vehicle make / model <span class="font-normal text-muted">(optional)</span></label><input class="input" enterkeyhint="next" id={uid("veh")} name="vehicle" maxlength="120" placeholder="e.g. Tesla Model Y, Ford F-150 Lightning" /></div>
       </fieldset>
 
       <fieldset class="step space-y-5" data-step="1">
@@ -153,7 +153,7 @@ const uid = (n: string) => `${formId}-${n}`;
         </fieldset>
         <div>
           <label class="field-label" for={uid("panel")}>Do you know your panel size? <span class="font-normal text-muted">(optional)</span></label>
-          <input class="input" id={uid("panel")} name="panel_size" maxlength="60" placeholder="e.g. 100A, 200A, or leave blank if not sure" />
+          <input class="input" enterkeyhint="next" id={uid("panel")} name="panel_size" maxlength="60" placeholder="e.g. 100A, 200A, or leave blank if not sure" />
           <p class="field-hint">Not sure? No problem. A photo of the panel tells us more than the number.</p>
         </div>
         <div data-upload-slot data-upload-label="Photo of your electrical panel (encouraged)"></div>
@@ -162,10 +162,10 @@ const uid = (n: string) => `${formId}-${n}`;
       <fieldset class="step space-y-5" data-step="2">
         <legend class="mb-6 text-xl font-bold text-white">Where should we send your results?</legend>
         <div class="grid gap-5 sm:grid-cols-2">
-          <div><label class="field-label" for={uid("fn")}>First name <span class="text-glow">*</span></label><input class="input" id={uid("fn")} name="first_name" autocomplete="given-name" required maxlength="80" /></div>
-          <div><label class="field-label" for={uid("ln")}>Last name <span class="text-glow">*</span></label><input class="input" id={uid("ln")} name="last_name" autocomplete="family-name" required maxlength="80" /></div>
-          <div><label class="field-label" for={uid("ph")}>Mobile phone <span class="text-glow">*</span></label><input class="input" id={uid("ph")} name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="[\d\s().+\-]{10,20}" /></div>
-          <div><label class="field-label" for={uid("em")}>Email <span class="text-glow">*</span></label><input class="input" id={uid("em")} name="email" type="email" autocomplete="email" required maxlength="160" /></div>
+          <div><label class="field-label" for={uid("fn")}>First name <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("fn")} name="first_name" autocomplete="given-name" required maxlength="80" /></div>
+          <div><label class="field-label" for={uid("ln")}>Last name <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("ln")} name="last_name" autocomplete="family-name" required maxlength="80" /></div>
+          <div><label class="field-label" for={uid("ph")}>Mobile phone <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("ph")} name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="[0-9\s\(\)\.\+\-]{10,20}" /></div>
+          <div><label class="field-label" for={uid("em")}>Email <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("em")} name="email" type="email" autocomplete="email" required maxlength="160" /></div>
         </div>
         <fieldset>
           <legend class="field-label">Preferred contact method <span class="text-glow">*</span></legend>
@@ -186,14 +186,14 @@ const uid = (n: string) => `${formId}-${n}`;
     <>
       <fieldset class="step space-y-5" data-step="0">
         <legend class="mb-6 text-xl font-bold text-white">Who should we talk to?</legend>
-        <div><label class="field-label" for={uid("biz")}>Business / property name <span class="text-glow">*</span></label><input class="input" id={uid("biz")} name="business_name" autocomplete="organization" required maxlength="160" /></div>
+        <div><label class="field-label" for={uid("biz")}>Business / property name <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("biz")} name="business_name" autocomplete="organization" required maxlength="160" /></div>
         <div class="grid gap-5 sm:grid-cols-2">
-          <div><label class="field-label" for={uid("fn")}>First name <span class="text-glow">*</span></label><input class="input" id={uid("fn")} name="first_name" autocomplete="given-name" required maxlength="80" /></div>
-          <div><label class="field-label" for={uid("ln")}>Last name <span class="text-glow">*</span></label><input class="input" id={uid("ln")} name="last_name" autocomplete="family-name" required maxlength="80" /></div>
-          <div><label class="field-label" for={uid("title")}>Job title <span class="text-glow">*</span></label><input class="input" id={uid("title")} name="job_title" autocomplete="organization-title" required maxlength="120" /></div>
-          <div><label class="field-label" for={uid("ph")}>Phone <span class="text-glow">*</span></label><input class="input" id={uid("ph")} name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="[\d\s().+\-]{10,20}" /></div>
+          <div><label class="field-label" for={uid("fn")}>First name <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("fn")} name="first_name" autocomplete="given-name" required maxlength="80" /></div>
+          <div><label class="field-label" for={uid("ln")}>Last name <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("ln")} name="last_name" autocomplete="family-name" required maxlength="80" /></div>
+          <div><label class="field-label" for={uid("title")}>Job title <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("title")} name="job_title" autocomplete="organization-title" required maxlength="120" /></div>
+          <div><label class="field-label" for={uid("ph")}>Phone <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("ph")} name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="[0-9\s\(\)\.\+\-]{10,20}" /></div>
         </div>
-        <div><label class="field-label" for={uid("em")}>Email <span class="text-glow">*</span></label><input class="input" id={uid("em")} name="email" type="email" autocomplete="email" required maxlength="160" /></div>
+        <div><label class="field-label" for={uid("em")}>Email <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("em")} name="email" type="email" autocomplete="email" required maxlength="160" /></div>
         <fieldset>
           <legend class="field-label">Best contact method <span class="text-glow">*</span></legend>
           <div class="grid grid-cols-3 gap-3">
@@ -206,7 +206,7 @@ const uid = (n: string) => `${formId}-${n}`;
 
       <fieldset class="step space-y-5" data-step="1">
         <legend class="mb-6 text-xl font-bold text-white">About the site</legend>
-        <div><label class="field-label" for={uid("ad")}>Site address <span class="text-glow">*</span></label><input class="input" id={uid("ad")} name="address" autocomplete="street-address" required maxlength="200" /></div>
+        <div><label class="field-label" for={uid("ad")}>Site address <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("ad")} name="address" autocomplete="street-address" required maxlength="200" /></div>
         <div class="grid gap-5 sm:grid-cols-2">
           <div>
             <label class="field-label" for={uid("pt")}>Property type <span class="text-glow">*</span></label>
@@ -215,7 +215,7 @@ const uid = (n: string) => `${formId}-${n}`;
               {["Office / workplace", "Retail center", "Multifamily / apartments", "Hotel / hospitality", "Fleet / service vehicles", "Auto dealership", "Industrial", "Municipal / community", "Other"].map((o) => <option value={o}>{o}</option>)}
             </select>
           </div>
-          <div><label class="field-label" for={uid("cc")}>Proposed charging spaces <span class="text-glow">*</span></label><input class="input" id={uid("cc")} name="charger_count" type="number" min="1" max="500" inputmode="numeric" required /></div>
+          <div><label class="field-label" for={uid("cc")}>Proposed charging spaces <span class="text-glow">*</span></label><input class="input" enterkeyhint="next" id={uid("cc")} name="charger_count" type="number" min="1" max="500" inputmode="numeric" required /></div>
         </div>
         <div>
           <label class="field-label" for={uid("tl")}>Project timeline <span class="text-glow">*</span></label>

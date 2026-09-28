@@ -16,7 +16,7 @@ export function getStaticPaths() {
 }
 const { a } = Astro.props as { a: ServiceArea };
 const svc = a.services.map(getService).filter((s): s is ServicePage => !!s && s.status === "published");
-const areaFaqs = faqs.filter((f) => ["panel-support", "permit", "cost", "what-to-send"].includes(f.id));
+const areaFaqs = faqs.filter((f) => ["rebates", "panel-support", "permit", "cost", "what-to-send"].includes(f.id));
 const crumbs = [{ name: "Service Areas", href: "/service-areas" }, { name: a.city, href: `/service-areas/${a.slug}` }];
 ---
 <BaseLayout

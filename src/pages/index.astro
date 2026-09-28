@@ -14,7 +14,7 @@ import { publishedServices } from "../data/services";
 import { faqs } from "../data/faqs";
 import { faqSchema } from "../lib/schema";
 
-const homeFaqs = faqs.filter((f) => ["level-2", "panel-support", "which-charger", "how-long", "business", "what-to-send"].includes(f.id));
+const homeFaqs = faqs.filter((f) => ["level-2", "panel-support", "rebates", "how-long", "business", "what-to-send"].includes(f.id));
 
 const whyCards = [
   { icon: "home", title: "Built Around Your Property", body: "Every electrical system is different. We evaluate the details that affect the project before recommending a path forward." },
@@ -47,7 +47,7 @@ const commercialFor = ["Office buildings", "Retail centers", "Multifamily commun
     <div class="pointer-events-none absolute right-[-10%] top-10 -z-10 h-[520px] w-[520px] rounded-full bg-cyan/15 blur-[140px]"></div>
 
     <!-- circuit traces -->
-    <svg class="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-70" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <svg class="pointer-events-none absolute inset-0 -z-10 hidden h-full w-full opacity-70 sm:block" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <g fill="none" stroke-width="1.5" stroke-linecap="round">
         <path d="M-20 820 H260 L320 760 H540 L600 820 H760" stroke="rgb(127 227 255 / .09)" />
         <path d="M-20 820 H260 L320 760 H540 L600 820 H760" stroke="#7fe3ff" stroke-dasharray="50 350" class="animate-current" style="animation-duration:4.5s" />
@@ -59,23 +59,23 @@ const commercialFor = ["Office buildings", "Retail centers", "Multifamily commun
       <g fill="#7fe3ff"><circle cx="760" cy="820" r="3" class="animate-pulse-glow" /><circle cx="820" cy="220" r="3" class="animate-pulse-glow" /><circle cx="1010" cy="730" r="3" class="animate-pulse-glow" /></g>
     </svg>
 
-    <div class="container-x grid items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-10">
+    <div class="container-x grid items-center gap-14 md:grid-cols-[1.05fr_1fr] md:gap-8 lg:gap-10">
       <div>
-        <p class="eyebrow" data-reveal><Icon name="bolt" class="size-3.5" /> {business.legalName}</p>
-        <h1 class="mt-6" data-reveal style="--reveal-delay:80ms">
-          <span class="chrome-text block text-5xl font-extrabold leading-[0.98] sm:text-6xl lg:text-7xl xl:text-[5.2rem]">Powering<br />What's Next.</span>
+        <p class="eyebrow"><Icon name="bolt" class="size-3.5" /> {business.legalName}</p>
+        <h1 class="mt-6">
+          <span class="chrome-text block text-5xl font-extrabold leading-[0.98] sm:text-6xl md:text-[3.4rem] lg:text-7xl xl:text-[5.2rem]">Powering<br />What's Next.</span>
           <span class="mt-5 block font-sans text-lg font-semibold text-glow sm:text-xl">EV Charger Installation &amp; Electrical Upgrades in Los Angeles</span>
         </h1>
-        <p class="mt-5 max-w-xl text-lg leading-relaxed text-muted" data-reveal style="--reveal-delay:160ms">
+        <p class="mt-5 max-w-xl text-lg leading-relaxed text-muted">
           EV chargers, panel upgrades, and electrical work for homes and businesses across Los Angeles, planned around your property and explained in plain language.
         </p>
-        <div class="mt-9 flex flex-col gap-3 sm:flex-row" data-reveal style="--reveal-delay:240ms">
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row md:flex-col xl:flex-row">
           <a href="/request-estimate" class="btn btn-primary !px-7 text-base">Get a Free Estimate <Icon name="arrow" class="size-4" /></a>
           {business.phone
             ? <a href={`tel:${business.phone.e164}`} class="btn btn-ghost !px-7 text-base" data-track="click_to_call"><Icon name="phone" class="size-4" /> Call {business.phone.display}</a>
             : <a href="/ev-readiness-check" class="btn btn-ghost !px-7 text-base"><Icon name="gauge" class="size-4" /> Check My EV Readiness</a>}
         </div>
-        <p class="mt-5 text-sm text-muted/90" data-reveal style="--reveal-delay:300ms">Clear communication. Clean workmanship. Electrical work done with purpose.</p>
+        <p class="mt-5 text-sm text-muted/90">Clear communication. Clean workmanship. Electrical work done with purpose.</p>
       </div>
 
       <!-- Brand reel panel -->
@@ -98,7 +98,7 @@ const commercialFor = ["Office buildings", "Retail centers", "Multifamily commun
             <source src="/media/logo-reveal.mp4" type="video/mp4" />
           </video>
           <div class="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5"></div>
-          <button type="button" id="hero-replay" class="absolute bottom-3 right-3 hidden rounded-full border border-white/15 bg-void/70 px-3 py-1.5 text-xs font-semibold text-ink backdrop-blur hover:border-glow/50">Replay ↻</button>
+          <button type="button" id="hero-replay" class="absolute bottom-3 right-3 hidden min-h-10 rounded-full border border-white/15 bg-void/70 px-4 py-2 text-sm font-semibold text-ink backdrop-blur hover:border-glow/50">Replay ↻</button>
         </div>
         <!-- floating capability chips -->
         <div class="absolute -bottom-6 -left-3 hidden animate-float items-center gap-3 rounded-2xl border border-line bg-deep/90 px-4 py-3 shadow-xl backdrop-blur sm:flex">
@@ -168,7 +168,7 @@ const commercialFor = ["Office buildings", "Retail centers", "Multifamily commun
         <ul class="mt-8 grid gap-3 sm:grid-cols-2" data-reveal>
           {evBullets.map((b) => <li class="flex gap-3 text-ink/90"><Icon name="check" class="mt-0.5 size-5 shrink-0 text-glow" />{b}</li>)}
         </ul>
-        <div class="mt-9 flex flex-col gap-3 sm:flex-row" data-reveal>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row" data-reveal>
           <a href="/request-estimate?service=ev_charger_installation" class="btn btn-primary">Get My EV Charger Estimate <Icon name="arrow" class="size-4" /></a>
           <a href="/ev-charger-installation" class="btn btn-ghost">How EV Installs Work</a>
         </div>
@@ -188,7 +188,7 @@ const commercialFor = ["Office buildings", "Retail centers", "Multifamily commun
         <p class="mt-4 flex-1 leading-relaxed text-muted">As homes and businesses add EV chargers, appliances, remodels, solar, and workshops, the existing panel may need attention. A panel upgrade isn't automatically required. We assess the equipment, capacity, and condition, then explain the practical options clearly.</p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="/request-estimate?service=electrical_panel_upgrade" class="btn btn-primary">Request a Panel Assessment</a>
-          <a href="/electrical-panel-upgrades" class="btn btn-ghost">Learn More</a>
+          <a href="/electrical-panel-upgrades" class="btn btn-ghost">Learn More<span class="sr-only"> about electrical panel upgrades</span></a>
         </div>
       </article>
       <article class="card relative flex flex-col overflow-hidden p-8 sm:p-10" data-reveal style="--reveal-delay:100ms">
@@ -202,7 +202,7 @@ const commercialFor = ["Office buildings", "Retail centers", "Multifamily commun
         </ul>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="/commercial-assessment" class="btn btn-primary">Schedule a Site Assessment</a>
-          <a href="/commercial-ev-charging" class="btn btn-ghost">Learn More</a>
+          <a href="/commercial-ev-charging" class="btn btn-ghost">Learn More<span class="sr-only"> about commercial EV charging</span></a>
         </div>
       </article>
     </div>
@@ -236,7 +236,12 @@ const commercialFor = ["Office buildings", "Retail centers", "Multifamily commun
       replay.classList.remove("hidden");
       replay.textContent = "Play ▶";
     }
-    v.addEventListener("ended", () => replay.classList.remove("hidden"));
+    else {
+      // iOS Low Power Mode / data saver can block autoplay: offer a play button instead of a frozen frame.
+      const tryPlay = v.play();
+      tryPlay?.catch(() => { replay.textContent = "Play ▶"; replay.classList.remove("hidden"); });
+    }
+    v.addEventListener("ended", () => { replay.textContent = "Replay ↻"; replay.classList.remove("hidden"); });
     replay.addEventListener("click", () => { v.currentTime = 0; v.play(); replay.classList.add("hidden"); });
   }
 </script>

@@ -20,7 +20,7 @@ const base = z.object({
   first_name: str(80).min(1, "First name is required."),
   last_name: str(80).min(1, "Last name is required."),
   phone: phoneSchema,
-  email: z.string().trim().toLowerCase().email("Please enter a valid email address.").max(160),
+  email: z.string().trim().toLowerCase().pipe(z.email("Please enter a valid email address.")).pipe(z.string().max(160)),
   address: str(200).min(5, "Please enter the property address."),
   preferred_contact: z.enum(["phone", "text", "email"]),
   service_type: z.enum(["ev_charger_installation", "electrical_panel_upgrade", "commercial_ev_charging", "electrical_repair", "other"]),
