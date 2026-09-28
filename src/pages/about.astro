@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import Icon from "../components/Icon.astro";
+import FinalCta from "../components/FinalCta.astro";
+import { business, licenseVisible } from "../config/business";
+
+const values = [
+  { icon: "search", t: "Ask the right questions", d: "We start by understanding the property, the goal, and the constraints." },
+  { icon: "panel", t: "Look at the whole system", d: "The new equipment is only as good as the electrical system behind it." },
+  { icon: "clipboard", t: "Explain it plainly", d: "Scope, options, and next steps without jargon." },
+  { icon: "sparkle", t: "Leave it clean", d: "Respectful, tidy job sites and careful work." },
+] as const;
+---
+<BaseLayout
+  title="About Charge On Electric Inc. | Bakersfield Electrical Contractor"
+  description="Charge On Electric Inc. delivers EV charging, panel upgrades, and electrical work designed for where technology is going next. Learn how we work."
+  breadcrumbs={[{ name: "About", href: "/about" }]}
+>
+  <PageHero
+    compact
+    eyebrow={business.legalName}
+    title="Electrical work designed for where technology is going next."
+    breadcrumbs={[{ name: "About", href: "/about" }]}
+  />
+
+  <section class="section">
+    <div class="container-x grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+      <div class="space-y-6 text-lg leading-relaxed text-muted" data-reveal>
+        <p class="text-xl text-ink">Electrical work shouldn't feel confusing, rushed, or impossible to understand.</p>
+        <p>At {business.legalName}, we help homeowners, property managers, and businesses move forward with clear electrical solutions built around the reality of their property.</p>
+        <p>That may mean preparing a garage for a Level 2 EV charger, evaluating whether an electrical panel has the capacity for new equipment, adding a dedicated circuit, improving electrical infrastructure, or planning a larger commercial charging project.</p>
+        <p>We believe the best work starts before installation. It starts with asking the right questions, looking closely at the existing system, explaining the scope in plain language, and helping the customer make an informed decision.</p>
+        <p class="font-semibold text-white">Our goal isn't to overwhelm you with jargon. It's to help you power what comes next.</p>
+      </div>
+      <div class="card relative overflow-hidden p-8" data-reveal>
+        <div class="grid-bg pointer-events-none absolute inset-0"></div>
+        <div class="relative">
+          <img src="/media/logo.webp" alt={business.legalName} width="640" height="154" loading="lazy" class="w-full" style="mix-blend-mode: screen" />
+          <ul class="mt-8 space-y-4">
+            {licenseVisible() && <li class="flex gap-3"><Icon name="shield" class="size-5 shrink-0 text-glow" /><span>CSLB {business.license.classification} License #{business.license.number}</span></li>}
+            <li class="flex gap-3"><Icon name="home" class="size-5 shrink-0 text-glow" /><span>Residential &amp; commercial electrical work</span></li>
+            <li class="flex gap-3"><Icon name="plug" class="size-5 shrink-0 text-glow" /><span>EV charging &amp; panel upgrades</span></li>
+            <li class="flex gap-3"><Icon name="pin" class="size-5 shrink-0 text-glow" /><span>{business.serviceAreaStatement}</span></li>
+          </ul>
+          <a href="/credentials" class="btn btn-ghost mt-8 w-full">View Credentials</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-t border-line bg-deep/50">
+    <div class="container-x">
+      <SectionHeading eyebrow="How We Work" title="Standards you can see." align="center" />
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {values.map((v, i) => (
+          <div class="card p-6" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+            <span class="grid size-11 place-items-center rounded-xl bg-electric/15 text-glow"><Icon name={v.icon} class="size-5" /></span>
+            <h3 class="mt-5 font-bold text-white">{v.t}</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted">{v.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  <FinalCta />
+</BaseLayout>

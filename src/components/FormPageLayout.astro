@@ -1,0 +1,46 @@
+---
+// Two-column layout for conversion pages: form on one side, reassurance on the other.
+import Icon from "./Icon.astro";
+import { business } from "../config/business";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  bullets: string[];
+  aside?: { title: string; body: string };
+}
+const { eyebrow, title, intro, bullets, aside } = Astro.props;
+---
+<section class="relative overflow-hidden pt-32 pb-24 sm:pt-40">
+  <div class="grid-bg pointer-events-none absolute inset-0"></div>
+  <div class="pointer-events-none absolute -top-40 left-1/4 h-[500px] w-[700px] rounded-full bg-electric/20 blur-[130px]"></div>
+  <div class="container-x relative grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+    <div class="lg:sticky lg:top-28 lg:self-start">
+      <p class="eyebrow"><Icon name="bolt" class="size-3.5" />{eyebrow}</p>
+      <h1 class="chrome-text mt-5 text-4xl font-extrabold leading-[1.05] sm:text-5xl">{title}</h1>
+      <p class="mt-5 text-lg leading-relaxed text-muted">{intro}</p>
+      <ul class="mt-8 space-y-3.5">
+        {bullets.map((b) => <li class="flex gap-3 text-ink/90"><Icon name="check" class="mt-0.5 size-5 shrink-0 text-glow" />{b}</li>)}
+      </ul>
+      {aside && (
+        <div class="mt-10 flex gap-4 rounded-2xl border border-line bg-white/[0.02] p-5">
+          <Icon name="camera" class="size-6 shrink-0 text-glow" />
+          <div><p class="font-bold text-white">{aside.title}</p><p class="mt-1 text-sm leading-relaxed text-muted">{aside.body}</p></div>
+        </div>
+      )}
+      {business.phone && (
+        <p class="mt-8 text-muted">Prefer to talk? <a href={`tel:${business.phone.e164}`} class="font-semibold text-glow underline underline-offset-4" data-track="click_to_call">Call {business.phone.display}</a></p>
+      )}
+    </div>
+    <div>
+      <p class="mb-6 hidden rounded-xl border border-danger/50 bg-danger/10 px-4 py-3 text-sm" role="alert" data-query-error>
+        Something in your submission needs attention. Please check the form and try again.
+      </p>
+      <script is:inline>
+        if (new URLSearchParams(location.search).get("error") === "1") document.querySelector("[data-query-error]")?.classList.remove("hidden");
+      </script>
+      <slot />
+    </div>
+  </div>
+</section>

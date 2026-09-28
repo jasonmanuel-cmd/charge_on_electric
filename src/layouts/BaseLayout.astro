@@ -1,0 +1,84 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import StickyMobileCta from "../components/StickyMobileCta.astro";
+import Analytics from "../components/Analytics.astro";
+import { business } from "../config/business";
+import { electricianSchema, breadcrumbSchema } from "../lib/schema";
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  ogImage?: string;
+  schema?: Record<string, unknown>[];
+  breadcrumbs?: { name: string; href: string }[];
+  /** GA4-style page event fired on load, e.g. "view_service" */
+  view?: string;
+}
+
+const { title, description, noindex = false, ogImage = "/media/og-image.jpg", schema = [], breadcrumbs, view } = Astro.props;
+const site = Astro.site ?? new URL(Astro.url.origin);
+const canonical = new URL(Astro.url.pathname.replace(/\/$/, "") || "/", site).href;
+const og = new URL(ogImage, site).href;
+
+const jsonLd = [
+  electricianSchema(site),
+  ...(breadcrumbs ? [breadcrumbSchema(site, [{ name: "Home", href: "/" }, ...breadcrumbs])] : []),
+  ...schema,
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta name="theme-color" content="#04080f" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={business.legalName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={og} />
+
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      // Failsafe: never leave content hidden if the reveal script doesn't run.
+      setTimeout(function () {
+        document.querySelectorAll("[data-reveal]:not(.is-visible)").forEach(function (el) {
+          var r = el.getBoundingClientRect();
+          if (r.top < innerHeight) el.classList.add("is-visible");
+        });
+      }, 2500);
+    </script>
+
+    {jsonLd.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
+    <Analytics />
+    <slot name="head" />
+  </head>
+  <body data-view={view}>
+    <Header />
+    <main id="main" tabindex="-1" class="outline-none">
+      <slot />
+    </main>
+    <Footer />
+    <StickyMobileCta />
+    <script>
+      import "../scripts/site.ts";
+    </script>
+  </body>
+</html>

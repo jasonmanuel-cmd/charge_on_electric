@@ -1,0 +1,50 @@
+---
+import Icon from "./Icon.astro";
+import SectionHeading from "./SectionHeading.astro";
+
+interface Props {
+  steps?: { title: string; description: string }[];
+  eyebrow?: string;
+  title?: string;
+  cta?: { label: string; href: string };
+}
+const defaultSteps = [
+  { title: "Tell Us About The Project", description: "Share your property address, what you need help with, your timeline, and any photos you have available." },
+  { title: "We Review The Electrical Needs", description: "We look at the details that affect the project, including equipment, power capacity, layout, access, and installation requirements." },
+  { title: "You Get A Clear Scope", description: "You receive a straightforward explanation of the recommended path, project variables, and next steps." },
+  { title: "Charge On", description: "Once the scope is approved, we coordinate the work and keep you informed throughout the process." },
+];
+const {
+  steps = defaultSteps,
+  eyebrow = "How It Works",
+  title = "A Clear Path From Question To Completion.",
+  cta = { label: "Start With An Estimate", href: "/request-estimate" },
+} = Astro.props;
+---
+<section class="section relative overflow-hidden">
+  <div class="container-x">
+    <SectionHeading eyebrow={eyebrow} title={title} align="center" />
+    <ol class="relative mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <!-- animated current line connecting steps (desktop) -->
+      <svg class="pointer-events-none absolute left-0 right-0 top-7 hidden h-2 w-full lg:block" preserveAspectRatio="none" viewBox="0 0 1000 8" aria-hidden="true">
+        <line x1="60" y1="4" x2="940" y2="4" stroke="rgb(148 190 255 / .15)" stroke-width="2" />
+        <line x1="60" y1="4" x2="940" y2="4" stroke="url(#hiw)" stroke-width="2" stroke-dasharray="60 340" class="animate-current" />
+        <defs><linearGradient id="hiw"><stop offset="0" stop-color="#7fe3ff" stop-opacity="0" /><stop offset=".5" stop-color="#7fe3ff" /><stop offset="1" stop-color="#1677ff" stop-opacity="0" /></linearGradient></defs>
+      </svg>
+      {steps.map((s, i) => (
+        <li class="relative" data-reveal style={`--reveal-delay:${i * 110}ms`}>
+          <div class="relative z-10 grid size-14 place-items-center rounded-2xl border border-glow/30 bg-deep font-display text-xl font-extrabold text-glow shadow-[0_0_30px_-8px_rgb(17_181_228/0.8)]">
+            {String(i + 1).padStart(2, "0")}
+          </div>
+          <h3 class="mt-6 text-lg font-bold text-white">{s.title}</h3>
+          <p class="mt-2 leading-relaxed text-muted">{s.description}</p>
+        </li>
+      ))}
+    </ol>
+    {cta && (
+      <div class="mt-14 text-center" data-reveal>
+        <a href={cta.href} class="btn btn-primary">{cta.label} <Icon name="arrow" class="size-4" /></a>
+      </div>
+    )}
+  </div>
+</section>

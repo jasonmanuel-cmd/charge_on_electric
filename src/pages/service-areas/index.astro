@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import Icon from "../../components/Icon.astro";
+import FinalCta from "../../components/FinalCta.astro";
+import { publishedAreas } from "../../data/serviceAreas";
+import { business } from "../../config/business";
+---
+<BaseLayout
+  title="Service Areas | Charge On Electric, Bakersfield"
+  description={`${business.serviceAreaStatement}. EV charger installation, panel upgrades, and electrical services.`}
+  breadcrumbs={[{ name: "Service Areas", href: "/service-areas" }]}
+>
+  <PageHero
+    compact
+    eyebrow="Service Areas"
+    title="Local work, done right."
+    subtitle="We only list areas where we can actually quote, permit, and support the work after it's done."
+    breadcrumbs={[{ name: "Service Areas", href: "/service-areas" }]}
+  />
+  <section class="section">
+    <div class="container-x grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {publishedAreas.map((a, i) => (
+        <a href={`/service-areas/${a.slug}`} class="card card-hover group p-7" data-reveal style={`--reveal-delay:${i * 80}ms`} data-track="view_service_area">
+          <Icon name="pin" class="size-7 text-glow" />
+          <h2 class="mt-5 text-2xl font-bold text-white">{a.city}, {a.region}</h2>
+          <p class="mt-2 text-muted">EV chargers, panel upgrades, commercial charging, and electrical services.</p>
+          <span class="mt-6 inline-flex items-center gap-2 text-sm font-bold text-glow">View area <Icon name="arrow" class="size-4 transition-transform group-hover:translate-x-1" /></span>
+        </a>
+      ))}
+      <div class="card flex flex-col justify-between p-7" data-reveal>
+        <div>
+          <h2 class="text-xl font-bold text-white">Not sure if you're covered?</h2>
+          <p class="mt-2 text-muted">Send us your address with your request. We'll confirm coverage before scheduling anything.</p>
+        </div>
+        <a href="/request-estimate" class="btn btn-primary mt-6">Check My Address</a>
+      </div>
+    </div>
+  </section>
+  <FinalCta />
+</BaseLayout>

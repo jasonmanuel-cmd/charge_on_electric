@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import { publishedServices } from "../data/services";
+---
+<BaseLayout title="Page Not Found | Charge On Electric" description="This page couldn't be found." noindex>
+  <section class="relative overflow-hidden pt-40 pb-24">
+    <div class="grid-bg pointer-events-none absolute inset-0"></div>
+    <div class="container-x relative max-w-3xl text-center">
+      <p class="font-display text-8xl font-extrabold electric-text">404</p>
+      <h1 class="chrome-text mt-4 text-4xl font-extrabold">Looks like this circuit's open.</h1>
+      <p class="mt-4 text-lg text-muted">The page you're looking for doesn't exist or has moved. Here's where you can go instead:</p>
+      <div class="mt-10 grid gap-3 text-left sm:grid-cols-2">
+        {publishedServices.map((s) => (
+          <a href={`/${s.slug}`} class="card card-hover flex items-center gap-3 p-4"><Icon name={s.icon} class="size-5 text-glow" /><span class="font-semibold">{s.navLabel}</span></a>
+        ))}
+      </div>
+      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/" class="btn btn-ghost">Go Home</a>
+        <a href="/request-estimate" class="btn btn-primary">Get an Estimate</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

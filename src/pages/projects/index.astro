@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import ProofSection from "../../components/ProofSection.astro";
+import FinalCta from "../../components/FinalCta.astro";
+---
+<BaseLayout
+  title="Projects | EV Charger & Electrical Work | Charge On Electric"
+  description="Real EV charger installations, panel upgrades, and electrical projects completed by Charge On Electric."
+  breadcrumbs={[{ name: "Projects", href: "/projects" }]}
+  view="view_project"
+>
+  <PageHero
+    compact
+    eyebrow="Projects"
+    title="Real Work. Real Results."
+    subtitle="Our project gallery highlights real installations, electrical upgrades, and jobsite outcomes. Every property has different constraints, and the goal is the right solution for the property in front of us."
+    breadcrumbs={[{ name: "Projects", href: "/projects" }]}
+  />
+  <ProofSection show="projects" limit={60} />
+  <FinalCta />
+</BaseLayout>

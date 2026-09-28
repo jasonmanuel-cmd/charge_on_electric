@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import Icon from "../components/Icon.astro";
+import FinalCta from "../components/FinalCta.astro";
+
+const sendList = [
+  { icon: "pin", t: "Property address", d: "So we can confirm service area and look up any jurisdiction requirements." },
+  { icon: "panel", t: "Electrical panel photo", d: "Door open, breakers and main breaker label visible." },
+  { icon: "camera", t: "Project area photos", d: "Garage wall, driveway, parking area, or wherever the work will happen." },
+  { icon: "car", t: "Vehicle or equipment", d: "EV make and model, or the charger/equipment you already have." },
+  { icon: "calendar", t: "Your timeline", d: "When you'd like the work done, or if you're still researching." },
+] as const;
+---
+<BaseLayout
+  title="How It Works | Charge On Electric"
+  description="How Charge On Electric takes an EV charger, panel upgrade, or electrical project from first question to completed work, with clear scope and estimates."
+  breadcrumbs={[{ name: "How It Works", href: "/how-it-works" }]}
+>
+  <PageHero
+    compact
+    eyebrow="How It Works"
+    title="The best work starts before installation."
+    subtitle="It starts with asking the right questions, looking closely at the existing system, explaining the scope in plain language, and helping you make an informed decision."
+    breadcrumbs={[{ name: "How It Works", href: "/how-it-works" }]}
+  />
+  <HowItWorks />
+  <section class="section border-t border-line bg-deep/50">
+    <div class="container-x">
+      <SectionHeading eyebrow="Faster Estimates" title="What to send us" intro="None of this is required to get started, but each item helps us give you a more accurate first look." />
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        {sendList.map((s, i) => (
+          <div class="card p-6" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+            <Icon name={s.icon} class="size-6 text-glow" />
+            <h3 class="mt-4 font-bold text-white">{s.t}</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted">{s.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  <FinalCta />
+</BaseLayout>

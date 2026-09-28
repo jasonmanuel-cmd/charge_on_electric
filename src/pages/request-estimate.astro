@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FormPageLayout from "../components/FormPageLayout.astro";
+import LeadForm from "../components/LeadForm.astro";
+---
+<BaseLayout
+  title="Request an Estimate | Charge On Electric, Bakersfield"
+  description="Request an estimate for EV charger installation, electrical panel upgrades, commercial EV charging, or electrical repairs in Bakersfield. Takes about two minutes."
+  breadcrumbs={[{ name: "Request an Estimate", href: "/request-estimate" }]}
+>
+  <FormPageLayout
+    eyebrow="Request an Estimate"
+    title="Let's Talk About Your Project."
+    intro="Whether you're ready to move forward or simply want to understand your options, start by telling us a little about your property and what you're planning. It takes about two minutes."
+    bullets={[
+      "No obligation. Just a clear next step",
+      "Straightforward scope and estimate in plain language",
+      "EV chargers, panels, commercial, and general electrical",
+    ]}
+    aside={{ title: "Have photos? Add them.", body: "A few clear photos of your electrical panel, garage, driveway, or project area help us understand the job faster." }}
+  >
+    <LeadForm variant="estimate" />
+  </FormPageLayout>
+</BaseLayout>

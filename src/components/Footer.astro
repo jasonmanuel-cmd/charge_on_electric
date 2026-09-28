@@ -1,0 +1,79 @@
+---
+import Icon from "./Icon.astro";
+import { business, licenseVisible } from "../config/business";
+import { publishedServices } from "../data/services";
+import { PUBLIC_GTM_ID, PUBLIC_CLARITY_PROJECT_ID } from "astro:env/client";
+const year = new Date().getFullYear();
+const analyticsOn = Boolean(PUBLIC_GTM_ID || PUBLIC_CLARITY_PROJECT_ID);
+---
+<footer class="relative mt-10 border-t border-line bg-deep pb-28 md:pb-10">
+  <div class="glow-line absolute inset-x-0 top-0"></div>
+  <div class="container-x grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <div>
+      <img src="/media/logo.webp" alt={business.legalName} width="640" height="154" loading="lazy" class="h-12 w-auto" style="mix-blend-mode: screen" />
+      <p class="mt-5 max-w-sm text-sm leading-relaxed text-muted">
+        EV charger installation, electrical panel upgrades, and residential and commercial electrical work. {business.serviceAreaStatement}.
+      </p>
+      <ul class="mt-6 space-y-2 text-sm">
+        {licenseVisible() && (
+          <li class="flex items-center gap-2 text-ink"><Icon name="shield" class="size-4 text-glow" /> CSLB License #{business.license.number} ({business.license.classification})</li>
+        )}
+        {business.phone && (
+          <li><a href={`tel:${business.phone.e164}`} class="flex items-center gap-2 hover:text-white" data-track="click_to_call"><Icon name="phone" class="size-4 text-glow" /> <span class="tabular">{business.phone.display}</span></a></li>
+        )}
+        {business.email && (
+          <li><a href={`mailto:${business.email}`} class="flex items-center gap-2 hover:text-white"><Icon name="mail" class="size-4 text-glow" /> {business.email}</a></li>
+        )}
+        {business.hours && <li class="flex items-center gap-2 text-muted"><Icon name="clock" class="size-4 text-glow" /> {business.hours}</li>}
+        <li class="flex items-center gap-2 text-muted"><Icon name="pin" class="size-4 text-glow" /> {business.serviceAreaStatement}</li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-sm font-bold uppercase tracking-[0.18em] text-ink">Services</h2>
+      <ul class="mt-4 space-y-2.5 text-sm text-muted">
+        {publishedServices.map((s) => <li><a href={`/${s.slug}`} class="hover:text-white">{s.navLabel}</a></li>)}
+        <li><a href="/ev-readiness-check" class="hover:text-white">EV Readiness Check</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-sm font-bold uppercase tracking-[0.18em] text-ink">Company</h2>
+      <ul class="mt-4 space-y-2.5 text-sm text-muted">
+        <li><a href="/about" class="hover:text-white">About</a></li>
+        <li><a href="/how-it-works" class="hover:text-white">How It Works</a></li>
+        <li><a href="/projects" class="hover:text-white">Projects</a></li>
+        <li><a href="/reviews" class="hover:text-white">Reviews</a></li>
+        <li><a href="/credentials" class="hover:text-white">Credentials</a></li>
+        <li><a href="/service-areas" class="hover:text-white">Service Areas</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-sm font-bold uppercase tracking-[0.18em] text-ink">Get Started</h2>
+      <ul class="mt-4 space-y-2.5 text-sm text-muted">
+        <li><a href="/request-estimate" class="hover:text-white">Request an Estimate</a></li>
+        <li><a href="/commercial-assessment" class="hover:text-white">Commercial Site Assessment</a></li>
+        <li><a href="/contact" class="hover:text-white">Contact</a></li>
+        <li><a href="/faq" class="hover:text-white">FAQ</a></li>
+      </ul>
+      <div class="mt-6 flex gap-2">
+        {Object.entries(business.social).filter(([, url]) => url).map(([name, url]) => (
+          <a href={url!} target="_blank" rel="noopener" class="grid size-10 place-items-center rounded-xl border border-line text-muted hover:border-glow/50 hover:text-white" aria-label={`${business.name} on ${name}`}>
+            {name === "instagram" ? <Icon name="instagram" class="size-5" /> : <Icon name="arrow" class="size-5" />}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="container-x flex flex-col gap-3 border-t border-line pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+    <p>© {year} {business.legalName}. All rights reserved.</p>
+    <ul class="flex flex-wrap gap-x-5 gap-y-2">
+      <li><a href="/privacy-policy" class="hover:text-white">Privacy Policy</a></li>
+      <li><a href="/terms-of-service" class="hover:text-white">Terms of Service</a></li>
+      <li><a href="/accessibility" class="hover:text-white">Accessibility</a></li>
+      {analyticsOn && <li><button type="button" class="hover:text-white" data-consent-open>Cookie Preferences</button></li>}
+    </ul>
+  </div>
+</footer>

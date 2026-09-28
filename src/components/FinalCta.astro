@@ -1,0 +1,33 @@
+---
+import Icon from "./Icon.astro";
+import { business } from "../config/business";
+interface Props { title?: string; copy?: string; primary?: { label: string; href: string } }
+const {
+  title = "Ready To Charge On?",
+  copy = "Start with a clear conversation about your property, your electrical needs, and the best next step. Request an estimate, upload project photos, or reach out today.",
+  primary = { label: "Get My Estimate", href: "/request-estimate" },
+} = Astro.props;
+---
+<section class="section">
+  <div class="container-x">
+    <div class="relative overflow-hidden rounded-3xl border border-glow/25 bg-gradient-to-br from-navy via-deep to-void px-6 py-16 text-center sm:px-16 sm:py-20" data-reveal>
+      <div class="grid-bg pointer-events-none absolute inset-0 opacity-70"></div>
+      <div class="pointer-events-none absolute left-1/2 top-0 h-64 w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan/30 blur-[100px]"></div>
+      <svg class="pointer-events-none absolute inset-x-0 bottom-0 h-24 w-full opacity-60" viewBox="0 0 1200 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 70 H300 L330 40 H520 L550 70 H760 L790 30 H1000 L1030 70 H1200" fill="none" stroke="rgb(127 227 255 / .15)" stroke-width="2" />
+        <path d="M0 70 H300 L330 40 H520 L550 70 H760 L790 30 H1000 L1030 70 H1200" fill="none" stroke="#7fe3ff" stroke-width="2" stroke-dasharray="80 320" class="animate-current" />
+      </svg>
+      <div class="relative">
+        <p class="eyebrow justify-center"><Icon name="bolt" class="size-3.5" /> Your next charge starts here</p>
+        <h2 class="chrome-text mx-auto mt-5 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">{title}</h2>
+        <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted">{copy}</p>
+        <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+          <a href={primary.href} class="btn btn-primary">{primary.label} <Icon name="arrow" class="size-4" /></a>
+          {business.phone
+            ? <a href={`tel:${business.phone.e164}`} class="btn btn-ghost" data-track="click_to_call"><Icon name="phone" class="size-4" /> Call {business.phone.display}</a>
+            : <a href="/ev-readiness-check" class="btn btn-ghost">Check My EV Readiness</a>}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

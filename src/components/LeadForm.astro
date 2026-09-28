@@ -1,0 +1,293 @@
+---
+import Icon from "./Icon.astro";
+import { PUBLIC_TURNSTILE_SITE_KEY } from "astro:env/client";
+
+export type FormVariant = "estimate" | "ev_readiness" | "commercial";
+interface Props { variant: FormVariant; presetService?: string }
+const { variant, presetService } = Astro.props;
+
+const CONSENT_VERSION = "2026-09-28";
+const formId = { estimate: "quick-estimate-v1", ev_readiness: "ev-readiness-v1", commercial: "commercial-assessment-v1" }[variant];
+const submitLabel = { estimate: "Request My Estimate", ev_readiness: "Check My EV Readiness", commercial: "Schedule Site Assessment" }[variant];
+const stepLabels = {
+  estimate: ["Contact", "Project"],
+  ev_readiness: ["Your Home", "Charging Spot", "Contact"],
+  commercial: ["Contact", "Site", "Details"],
+}[variant];
+
+const serviceOptions = [
+  { value: "ev_charger_installation", label: "EV charger installation" },
+  { value: "electrical_panel_upgrade", label: "Electrical panel upgrade" },
+  { value: "commercial_ev_charging", label: "Commercial EV charging" },
+  { value: "electrical_repair", label: "Electrical repair / troubleshooting" },
+  { value: "other", label: "Other" },
+];
+const timelines = [
+  { value: "asap", label: "ASAP" },
+  { value: "within_1_2_weeks", label: "Within 1–2 weeks" },
+  { value: "this_month", label: "This month" },
+  { value: "planning", label: "Planning / researching" },
+];
+const uid = (n: string) => `${formId}-${n}`;
+---
+<form
+  class="lead-form card relative overflow-hidden p-6 sm:p-9"
+  action="/api/lead"
+  method="post"
+  enctype="multipart/form-data"
+  novalidate
+  data-lead-form
+  data-form-id={formId}
+  data-form-type={variant}
+>
+  <div class="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-electric/15 blur-3xl"></div>
+
+  <input type="hidden" name="form_type" value={variant} />
+  <input type="hidden" name="form_id" value={formId} />
+  <input type="hidden" name="consent_version" value={CONSENT_VERSION} />
+  <input type="hidden" name="attribution" value="" data-attribution />
+  <input type="hidden" name="page_url" value="" data-page-url />
+  <input type="hidden" name="event_id" value="" data-event-id />
+  <!-- Honeypot: humans never see or fill this -->
+  <div aria-hidden="true" class="absolute -left-[9999px] h-px w-px overflow-hidden">
+    <label for={uid("website")}>Leave this field empty</label>
+    <input type="text" id={uid("website")} name="company_website" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <!-- Progress -->
+  <div class="relative mb-8 hidden js-only" data-progress>
+    <ol class="flex items-center gap-2">
+      {stepLabels.map((label, i) => (
+        <li class="flex flex-1 flex-col gap-2" data-step-indicator={i}>
+          <span class="h-1.5 rounded-full bg-line transition-colors duration-300" data-bar></span>
+          <span class="text-xs font-semibold text-muted" data-label><span class="tabular">{i + 1}.</span> {label}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <div class="relative" role="alert" aria-live="assertive">
+    <p class="mb-6 hidden rounded-xl border border-danger/50 bg-danger/10 px-4 py-3 text-sm text-ink" data-form-error></p>
+  </div>
+
+  <!-- ===================== ESTIMATE ===================== -->
+  {variant === "estimate" && (
+    <>
+      <fieldset class="step space-y-5" data-step="0">
+        <legend class="mb-6 text-xl font-bold text-white">Your contact details</legend>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div><label class="field-label" for={uid("fn")}>First name <span class="text-glow">*</span></label><input class="input" id={uid("fn")} name="first_name" autocomplete="given-name" required maxlength="80" /></div>
+          <div><label class="field-label" for={uid("ln")}>Last name <span class="text-glow">*</span></label><input class="input" id={uid("ln")} name="last_name" autocomplete="family-name" required maxlength="80" /></div>
+          <div><label class="field-label" for={uid("ph")}>Mobile phone <span class="text-glow">*</span></label><input class="input" id={uid("ph")} name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="[\d\s().+\-]{10,20}" /></div>
+          <div><label class="field-label" for={uid("em")}>Email <span class="text-glow">*</span></label><input class="input" id={uid("em")} name="email" type="email" autocomplete="email" required maxlength="160" /></div>
+        </div>
+        <div><label class="field-label" for={uid("ad")}>Property address <span class="text-glow">*</span></label><input class="input" id={uid("ad")} name="address" autocomplete="street-address" required maxlength="200" placeholder="Street, city, ZIP" /></div>
+        <fieldset>
+          <legend class="field-label">Preferred contact method <span class="text-glow">*</span></legend>
+          <div class="grid grid-cols-3 gap-3">
+            {[["phone", "Call"], ["text", "Text"], ["email", "Email"]].map(([v, l], i) => (
+              <label class="choice"><input type="radio" name="preferred_contact" value={v} required checked={i === 0} />{l}</label>
+            ))}
+          </div>
+        </fieldset>
+      </fieldset>
+
+      <fieldset class="step space-y-5" data-step="1">
+        <legend class="mb-6 text-xl font-bold text-white">About your project</legend>
+        <div>
+          <label class="field-label" for={uid("svc")}>What do you need help with? <span class="text-glow">*</span></label>
+          <select class="input" id={uid("svc")} name="service_type" required>
+            <option value="">Select a service</option>
+            {serviceOptions.map((o) => <option value={o.value} selected={presetService === o.value}>{o.label}</option>)}
+          </select>
+        </div>
+        <div>
+          <label class="field-label" for={uid("sum")}>Tell us briefly about the project <span class="text-glow">*</span></label>
+          <textarea class="input min-h-32" id={uid("sum")} name="project_summary" required maxlength="2000" rows="4" placeholder="e.g. New EV arriving next month. Want a Level 2 charger in the garage. Panel is on the outside wall."></textarea>
+        </div>
+        <fieldset>
+          <legend class="field-label">Preferred timeframe <span class="text-glow">*</span></legend>
+          <div class="grid gap-3 sm:grid-cols-2">
+            {timelines.map((t) => <label class="choice"><input type="radio" name="timeline" value={t.value} required />{t.label}</label>)}
+          </div>
+        </fieldset>
+        <div data-upload-slot></div>
+      </fieldset>
+    </>
+  )}
+
+  <!-- ===================== EV READINESS ===================== -->
+  {variant === "ev_readiness" && (
+    <>
+      <fieldset class="step space-y-5" data-step="0">
+        <legend class="mb-6 text-xl font-bold text-white">Tell us about your home</legend>
+        <div><label class="field-label" for={uid("ad")}>Property address <span class="text-glow">*</span></label><input class="input" id={uid("ad")} name="address" autocomplete="street-address" required maxlength="200" placeholder="Street, city, ZIP" /></div>
+        <fieldset>
+          <legend class="field-label">Home type <span class="text-glow">*</span></legend>
+          <div class="grid gap-3 sm:grid-cols-2">
+            {[["single_family", "Single-family"], ["townhome_condo", "Townhome / condo"], ["multifamily", "Multifamily"], ["other", "Other"]].map(([v, l]) => (
+              <label class="choice"><input type="radio" name="property_type" value={v} required />{l}</label>
+            ))}
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="field-label">Do you already own an EV?</legend>
+          <div class="grid gap-3 sm:grid-cols-3">
+            {[["yes", "Yes"], ["planning", "No, planning to buy"], ["not_sure", "Not sure"]].map(([v, l]) => (
+              <label class="choice"><input type="radio" name="ev_owned" value={v} />{l}</label>
+            ))}
+          </div>
+        </fieldset>
+        <div><label class="field-label" for={uid("veh")}>Vehicle make / model <span class="font-normal text-muted">(optional)</span></label><input class="input" id={uid("veh")} name="vehicle" maxlength="120" placeholder="e.g. Tesla Model Y, Ford F-150 Lightning" /></div>
+      </fieldset>
+
+      <fieldset class="step space-y-5" data-step="1">
+        <legend class="mb-6 text-xl font-bold text-white">Where will you charge?</legend>
+        <fieldset>
+          <legend class="field-label">Charging location <span class="text-glow">*</span></legend>
+          <div class="grid gap-3 sm:grid-cols-3">
+            {[["garage", "Garage"], ["driveway", "Driveway"], ["carport", "Carport"], ["outdoor_parking", "Outdoor parking"], ["other", "Other"]].map(([v, l]) => (
+              <label class="choice"><input type="radio" name="charger_location" value={v} required />{l}</label>
+            ))}
+          </div>
+        </fieldset>
+        <div>
+          <label class="field-label" for={uid("panel")}>Do you know your panel size? <span class="font-normal text-muted">(optional)</span></label>
+          <input class="input" id={uid("panel")} name="panel_size" maxlength="60" placeholder="e.g. 100A, 200A, or leave blank if not sure" />
+          <p class="field-hint">Not sure? No problem. A photo of the panel tells us more than the number.</p>
+        </div>
+        <div data-upload-slot data-upload-label="Photo of your electrical panel (encouraged)"></div>
+      </fieldset>
+
+      <fieldset class="step space-y-5" data-step="2">
+        <legend class="mb-6 text-xl font-bold text-white">Where should we send your results?</legend>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div><label class="field-label" for={uid("fn")}>First name <span class="text-glow">*</span></label><input class="input" id={uid("fn")} name="first_name" autocomplete="given-name" required maxlength="80" /></div>
+          <div><label class="field-label" for={uid("ln")}>Last name <span class="text-glow">*</span></label><input class="input" id={uid("ln")} name="last_name" autocomplete="family-name" required maxlength="80" /></div>
+          <div><label class="field-label" for={uid("ph")}>Mobile phone <span class="text-glow">*</span></label><input class="input" id={uid("ph")} name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="[\d\s().+\-]{10,20}" /></div>
+          <div><label class="field-label" for={uid("em")}>Email <span class="text-glow">*</span></label><input class="input" id={uid("em")} name="email" type="email" autocomplete="email" required maxlength="160" /></div>
+        </div>
+        <fieldset>
+          <legend class="field-label">Preferred contact method <span class="text-glow">*</span></legend>
+          <div class="grid grid-cols-3 gap-3">
+            {[["phone", "Call"], ["text", "Text"], ["email", "Email"]].map(([v, l], i) => (
+              <label class="choice"><input type="radio" name="preferred_contact" value={v} required checked={i === 0} />{l}</label>
+            ))}
+          </div>
+        </fieldset>
+        <input type="hidden" name="service_type" value="ev_charger_installation" />
+        <input type="hidden" name="timeline" value="planning" />
+      </fieldset>
+    </>
+  )}
+
+  <!-- ===================== COMMERCIAL ===================== -->
+  {variant === "commercial" && (
+    <>
+      <fieldset class="step space-y-5" data-step="0">
+        <legend class="mb-6 text-xl font-bold text-white">Who should we talk to?</legend>
+        <div><label class="field-label" for={uid("biz")}>Business / property name <span class="text-glow">*</span></label><input class="input" id={uid("biz")} name="business_name" autocomplete="organization" required maxlength="160" /></div>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div><label class="field-label" for={uid("fn")}>First name <span class="text-glow">*</span></label><input class="input" id={uid("fn")} name="first_name" autocomplete="given-name" required maxlength="80" /></div>
+          <div><label class="field-label" for={uid("ln")}>Last name <span class="text-glow">*</span></label><input class="input" id={uid("ln")} name="last_name" autocomplete="family-name" required maxlength="80" /></div>
+          <div><label class="field-label" for={uid("title")}>Job title <span class="text-glow">*</span></label><input class="input" id={uid("title")} name="job_title" autocomplete="organization-title" required maxlength="120" /></div>
+          <div><label class="field-label" for={uid("ph")}>Phone <span class="text-glow">*</span></label><input class="input" id={uid("ph")} name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="[\d\s().+\-]{10,20}" /></div>
+        </div>
+        <div><label class="field-label" for={uid("em")}>Email <span class="text-glow">*</span></label><input class="input" id={uid("em")} name="email" type="email" autocomplete="email" required maxlength="160" /></div>
+        <fieldset>
+          <legend class="field-label">Best contact method <span class="text-glow">*</span></legend>
+          <div class="grid grid-cols-3 gap-3">
+            {[["phone", "Call"], ["text", "Text"], ["email", "Email"]].map(([v, l], i) => (
+              <label class="choice"><input type="radio" name="preferred_contact" value={v} required checked={i === 0} />{l}</label>
+            ))}
+          </div>
+        </fieldset>
+      </fieldset>
+
+      <fieldset class="step space-y-5" data-step="1">
+        <legend class="mb-6 text-xl font-bold text-white">About the site</legend>
+        <div><label class="field-label" for={uid("ad")}>Site address <span class="text-glow">*</span></label><input class="input" id={uid("ad")} name="address" autocomplete="street-address" required maxlength="200" /></div>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label class="field-label" for={uid("pt")}>Property type <span class="text-glow">*</span></label>
+            <select class="input" id={uid("pt")} name="property_type" required>
+              <option value="">Select type</option>
+              {["Office / workplace", "Retail center", "Multifamily / apartments", "Hotel / hospitality", "Fleet / service vehicles", "Auto dealership", "Industrial", "Municipal / community", "Other"].map((o) => <option value={o}>{o}</option>)}
+            </select>
+          </div>
+          <div><label class="field-label" for={uid("cc")}>Proposed charging spaces <span class="text-glow">*</span></label><input class="input" id={uid("cc")} name="charger_count" type="number" min="1" max="500" inputmode="numeric" required /></div>
+        </div>
+        <div>
+          <label class="field-label" for={uid("tl")}>Project timeline <span class="text-glow">*</span></label>
+          <select class="input" id={uid("tl")} name="timeline" required>
+            <option value="">Select timeline</option>
+            <option value="asap">As soon as possible</option>
+            <option value="within_1_2_weeks">Within a few weeks</option>
+            <option value="this_month">Next 1–3 months</option>
+            <option value="planning">Planning / budgeting</option>
+          </select>
+        </div>
+        <fieldset>
+          <legend class="field-label">Existing electrical capacity known?</legend>
+          <div class="grid gap-3 sm:grid-cols-3">
+            {[["yes", "Yes"], ["partially", "Partially"], ["no", "No / not sure"]].map(([v, l]) => (
+              <label class="choice"><input type="radio" name="existing_service_known" value={v} />{l}</label>
+            ))}
+          </div>
+        </fieldset>
+        <input type="hidden" name="service_type" value="commercial_ev_charging" />
+      </fieldset>
+
+      <fieldset class="step space-y-5" data-step="2">
+        <legend class="mb-6 text-xl font-bold text-white">Plans, photos &amp; notes</legend>
+        <div data-upload-slot data-upload-label="Site plans or photos (optional)"></div>
+        <div>
+          <label class="field-label" for={uid("notes")}>Project notes <span class="font-normal text-muted">(optional)</span></label>
+          <textarea class="input min-h-32" id={uid("notes")} name="project_summary" maxlength="3000" rows="4" placeholder="Goals, users (employees, tenants, public, fleet), parking layout, known constraints…"></textarea>
+        </div>
+      </fieldset>
+    </>
+  )}
+
+  <!-- Upload control (moved into the step's upload slot by script; stays at the end without JS) -->
+  <div class="mt-5" data-upload>
+    <label class="field-label" for={uid("files")} data-upload-text>Upload photos <span class="font-normal text-muted">(optional, up to 5)</span></label>
+    <label for={uid("files")} class="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-glow/30 bg-deep px-4 py-7 text-center transition hover:border-glow/60 hover:bg-electric/5">
+      <Icon name="upload" class="size-6 text-glow" />
+      <span class="text-sm font-semibold text-ink">Tap to add photos</span>
+      <span class="text-xs text-muted">Panel, charging spot, or project area · JPG, PNG, HEIC, PDF · 10 MB each</span>
+    </label>
+    <input id={uid("files")} name="photos" type="file" multiple accept="image/*,.heic,.heif,application/pdf" class="sr-only" data-file-input />
+    <ul class="mt-3 space-y-1 text-sm text-muted" data-file-list></ul>
+  </div>
+
+  <!-- Consent + submit (always on final step) -->
+  <div class="mt-6 space-y-4" data-final>
+    <label class="flex items-start gap-3 text-sm leading-relaxed text-muted">
+      <input type="checkbox" name="consent_contact" value="yes" required class="mt-1 size-4 shrink-0 accent-electric" />
+      <span>I agree that Charge On Electric may contact me about this request by phone, text, or email, and I've read the <a href="/privacy-policy" class="text-glow underline underline-offset-4" target="_blank">Privacy Policy</a>. <span class="text-glow">*</span></span>
+    </label>
+    <label class="flex items-start gap-3 text-sm leading-relaxed text-muted">
+      <input type="checkbox" name="consent_sms" value="yes" class="mt-1 size-4 shrink-0 accent-electric" />
+      <span>Send me text message updates about my request. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out. Consent is not a condition of service.</span>
+    </label>
+    {PUBLIC_TURNSTILE_SITE_KEY && <div class="cf-turnstile" data-sitekey={PUBLIC_TURNSTILE_SITE_KEY} data-theme="dark"></div>}
+  </div>
+
+  <!-- Nav -->
+  <div class="relative mt-8 flex items-center gap-3">
+    <button type="button" class="btn btn-ghost hidden" data-prev><span aria-hidden="true">←</span> Back</button>
+    <button type="button" class="btn btn-primary ml-auto hidden" data-next>Continue <Icon name="arrow" class="size-4" /></button>
+    <button type="submit" class="btn btn-primary ml-auto w-full sm:w-auto" data-submit>
+      <span data-submit-label>{submitLabel}</span>
+      <svg class="hidden size-5 animate-spin" viewBox="0 0 24 24" fill="none" data-spinner aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-opacity=".25" stroke-width="3"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <p class="relative mt-4 flex items-center gap-2 text-xs text-muted"><Icon name="shield" class="size-3.5 text-glow" /> Your information is only used to respond to your request.</p>
+</form>
+
+{PUBLIC_TURNSTILE_SITE_KEY && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  import "../scripts/leadForm.ts";
+</script>

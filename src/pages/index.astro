@@ -1,0 +1,242 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import TrustBar from "../components/TrustBar.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import PowerFlow from "../components/PowerFlow.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import ProofSection from "../components/ProofSection.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import FinalCta from "../components/FinalCta.astro";
+import { business } from "../config/business";
+import { publishedServices } from "../data/services";
+import { faqs } from "../data/faqs";
+import { faqSchema } from "../lib/schema";
+
+const homeFaqs = faqs.filter((f) => ["level-2", "panel-support", "which-charger", "how-long", "business", "what-to-send"].includes(f.id));
+
+const whyCards = [
+  { icon: "home", title: "Built Around Your Property", body: "Every electrical system is different. We evaluate the details that affect the project before recommending a path forward." },
+  { icon: "clipboard", title: "Clear From The Start", body: "You should understand what is being installed, why it is needed, and what the next step looks like before work begins." },
+  { icon: "gauge", title: "Prepared For Modern Demand", body: "EV charging, solar, battery storage, remodels, and business operations can all change what your electrical system needs." },
+  { icon: "eye", title: "Work You Can See", body: "We believe in showing our work: completed projects, installation details, and real examples of how we help customers move forward." },
+] as const;
+
+const evBullets = [
+  "Home EV charger installation",
+  "Level 2 charging setup",
+  "Dedicated circuits",
+  "Electrical panel readiness assessments",
+  "Panel upgrades when needed",
+  "Garage, driveway, carport, and outdoor charging",
+  "Residential and select commercial charging projects",
+];
+
+const commercialFor = ["Office buildings", "Retail centers", "Multifamily communities", "Hotels & hospitality", "Fleets", "Auto dealerships", "Industrial sites", "Property portfolios"];
+---
+<BaseLayout
+  title="EV Charger Installation & Electrical Upgrades in Bakersfield | Charge On Electric"
+  description="Charge On Electric Inc. installs home and commercial EV chargers, upgrades electrical panels, and handles residential and commercial electrical work in Bakersfield, CA. Get a clear estimate."
+  schema={[faqSchema(homeFaqs)]}
+>
+  <!-- ================= HERO ================= -->
+  <section class="relative isolate overflow-hidden pt-28 pb-16 sm:pt-36 lg:pt-40 lg:pb-24">
+    <div class="grid-bg pointer-events-none absolute inset-0 -z-10"></div>
+    <div class="pointer-events-none absolute -top-48 left-[-10%] -z-10 h-[620px] w-[620px] rounded-full bg-electric/25 blur-[140px]"></div>
+    <div class="pointer-events-none absolute right-[-10%] top-10 -z-10 h-[520px] w-[520px] rounded-full bg-cyan/15 blur-[140px]"></div>
+
+    <!-- circuit traces -->
+    <svg class="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-70" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke-width="1.5" stroke-linecap="round">
+        <path d="M-20 820 H260 L320 760 H540 L600 820 H760" stroke="rgb(127 227 255 / .09)" />
+        <path d="M-20 820 H260 L320 760 H540 L600 820 H760" stroke="#7fe3ff" stroke-dasharray="50 350" class="animate-current" style="animation-duration:4.5s" />
+        <path d="M1460 220 H1180 L1120 280 H960 L900 220 H820" stroke="rgb(127 227 255 / .09)" />
+        <path d="M1460 220 H1180 L1120 280 H960 L900 220 H820" stroke="#1677ff" stroke-dasharray="60 340" class="animate-current" style="animation-duration:3.6s" />
+        <path d="M1460 780 H1240 L1190 730 H1010" stroke="rgb(127 227 255 / .08)" />
+        <path d="M1460 780 H1240 L1190 730 H1010" stroke="#11b5e4" stroke-dasharray="40 360" class="animate-current" style="animation-duration:5s" />
+      </g>
+      <g fill="#7fe3ff"><circle cx="760" cy="820" r="3" class="animate-pulse-glow" /><circle cx="820" cy="220" r="3" class="animate-pulse-glow" /><circle cx="1010" cy="730" r="3" class="animate-pulse-glow" /></g>
+    </svg>
+
+    <div class="container-x grid items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-10">
+      <div>
+        <p class="eyebrow" data-reveal><Icon name="bolt" class="size-3.5" /> {business.legalName}</p>
+        <h1 class="mt-6" data-reveal style="--reveal-delay:80ms">
+          <span class="chrome-text block text-5xl font-extrabold leading-[0.98] sm:text-6xl lg:text-7xl xl:text-[5.2rem]">Powering<br />What's Next.</span>
+          <span class="mt-5 block font-sans text-lg font-semibold text-glow sm:text-xl">EV Charger Installation &amp; Electrical Upgrades in Bakersfield</span>
+        </h1>
+        <p class="mt-5 max-w-xl text-lg leading-relaxed text-muted" data-reveal style="--reveal-delay:160ms">
+          Professional EV charger installation, electrical panel upgrades, and dependable electrical solutions for homes and businesses in Bakersfield and verified surrounding areas.
+        </p>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row" data-reveal style="--reveal-delay:240ms">
+          <a href="/request-estimate" class="btn btn-primary !px-7 text-base">Get a Free Estimate <Icon name="arrow" class="size-4" /></a>
+          {business.phone
+            ? <a href={`tel:${business.phone.e164}`} class="btn btn-ghost !px-7 text-base" data-track="click_to_call"><Icon name="phone" class="size-4" /> Call {business.phone.display}</a>
+            : <a href="/ev-readiness-check" class="btn btn-ghost !px-7 text-base"><Icon name="gauge" class="size-4" /> Check My EV Readiness</a>}
+        </div>
+        <p class="mt-5 text-sm text-muted/90" data-reveal style="--reveal-delay:300ms">Clear communication. Clean workmanship. Electrical work done with purpose.</p>
+      </div>
+
+      <!-- Brand reel panel -->
+      <div class="relative" data-reveal style="--reveal-delay:200ms">
+        <div class="absolute -inset-6 rounded-[2rem] bg-gradient-to-tr from-electric/30 via-cyan/10 to-transparent blur-2xl"></div>
+        <div class="relative overflow-hidden rounded-3xl border border-glow/30 bg-void shadow-[0_30px_80px_-20px_rgb(22_119_255/0.55)]">
+          <video
+            id="hero-reel"
+            class="aspect-video w-full object-cover"
+            autoplay
+            muted
+            playsinline
+            preload="metadata"
+            poster="/media/logo-reveal-poster.webp"
+            width="1280"
+            height="720"
+            aria-label="Charge On Electric animated logo"
+          >
+            <source src="/media/logo-reveal.webm" type="video/webm" />
+            <source src="/media/logo-reveal.mp4" type="video/mp4" />
+          </video>
+          <div class="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5"></div>
+          <button type="button" id="hero-replay" class="absolute bottom-3 right-3 hidden rounded-full border border-white/15 bg-void/70 px-3 py-1.5 text-xs font-semibold text-ink backdrop-blur hover:border-glow/50">Replay ↻</button>
+        </div>
+        <!-- floating capability chips -->
+        <div class="absolute -bottom-6 -left-3 hidden animate-float items-center gap-3 rounded-2xl border border-line bg-deep/90 px-4 py-3 shadow-xl backdrop-blur sm:flex">
+          <span class="grid size-9 place-items-center rounded-lg bg-electric/15 text-glow"><Icon name="plug" class="size-5" /></span>
+          <span class="text-sm"><span class="block font-bold text-white">Level 2 EV Charging</span><span class="text-muted">Home &amp; commercial</span></span>
+        </div>
+        <div class="absolute -right-3 -top-6 hidden animate-float items-center gap-3 rounded-2xl border border-line bg-deep/90 px-4 py-3 shadow-xl backdrop-blur sm:flex" style="animation-delay:-3.5s">
+          <span class="grid size-9 place-items-center rounded-lg bg-cyan/15 text-glow"><Icon name="panel" class="size-5" /></span>
+          <span class="text-sm"><span class="block font-bold text-white">Panel Assessments</span><span class="text-muted">Capacity checked first</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustBar />
+
+  <!-- ================= SERVICES ================= -->
+  <section class="section" id="services">
+    <div class="container-x">
+      <SectionHeading eyebrow="What We Do" title="Modern electrical solutions for the way you live, drive, build, and grow." />
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {publishedServices.map((s, i) => <ServiceCard service={s} index={i} />)}
+        <a href="/ev-readiness-check" class="card card-hover group relative flex flex-col overflow-hidden border-glow/30 bg-gradient-to-br from-electric/20 to-panel p-7 sm:col-span-2 lg:col-span-2" data-reveal style="--reveal-delay:320ms">
+          <div class="grid-bg pointer-events-none absolute inset-0"></div>
+          <div class="relative flex h-full flex-col justify-between gap-6 sm:flex-row sm:items-center">
+            <div>
+              <p class="eyebrow">EV Readiness Check</p>
+              <h3 class="mt-3 text-2xl font-bold text-white">Not sure if your home is ready for an EV?</h3>
+              <p class="mt-2 max-w-lg text-muted">Answer a few quick questions and send a photo of your panel. We'll help you understand the next step, no electrical knowledge needed.</p>
+            </div>
+            <span class="btn btn-primary shrink-0">Check My EV Readiness <Icon name="arrow" class="size-4" /></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHY US ================= -->
+  <section class="section relative border-y border-line bg-deep/60">
+    <div class="container-x grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+      <SectionHeading eyebrow="Why Charge On Electric" title="More Than A Charger Install." intro="An EV charger, panel upgrade, or commercial electrical project is only as good as the planning behind it. We look beyond the surface to understand the electrical system, installation location, equipment needs, and the practical realities of your property." />
+      <div class="grid gap-5 sm:grid-cols-2">
+        {whyCards.map((c, i) => (
+          <div class="card p-6" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+            <span class="grid size-11 place-items-center rounded-xl bg-electric/15 text-glow"><Icon name={c.icon} class="size-5" /></span>
+            <h3 class="mt-5 text-lg font-bold text-white">{c.title}</h3>
+            <p class="mt-2 leading-relaxed text-muted">{c.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EV SECTION ================= -->
+  <section class="section relative overflow-hidden">
+    <div class="pointer-events-none absolute right-0 top-1/2 -z-10 h-[500px] w-[500px] -translate-y-1/2 rounded-full bg-electric/15 blur-[130px]"></div>
+    <div class="container-x grid items-center gap-14 lg:grid-cols-2">
+      <div class="order-2 lg:order-1" data-reveal>
+        <div class="card p-6 sm:p-10">
+          <PowerFlow />
+        </div>
+      </div>
+      <div class="order-1 lg:order-2">
+        <SectionHeading eyebrow="EV Charger Installation" title="Bring EV Charging Home.">
+          <p class="mt-5 text-lg leading-relaxed text-muted">Installing a charger is not just about mounting equipment on a wall. A proper installation starts with the electrical system: panel, available capacity, breaker space, wiring route, and charger location.</p>
+        </SectionHeading>
+        <ul class="mt-8 grid gap-3 sm:grid-cols-2" data-reveal>
+          {evBullets.map((b) => <li class="flex gap-3 text-ink/90"><Icon name="check" class="mt-0.5 size-5 shrink-0 text-glow" />{b}</li>)}
+        </ul>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row" data-reveal>
+          <a href="/request-estimate?service=ev_charger_installation" class="btn btn-primary">Get My EV Charger Estimate <Icon name="arrow" class="size-4" /></a>
+          <a href="/ev-charger-installation" class="btn btn-ghost">How EV Installs Work</a>
+        </div>
+        <p class="mt-4 flex items-center gap-2 text-sm text-muted" data-reveal><Icon name="camera" class="size-4 text-glow" /> Send photos of your panel and charging area for a faster first look.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PANEL + COMMERCIAL ================= -->
+  <section class="section pt-0">
+    <div class="container-x grid gap-6 lg:grid-cols-2">
+      <article class="card relative flex flex-col overflow-hidden p-8 sm:p-10" data-reveal>
+        <div class="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-cyan/15 blur-3xl"></div>
+        <span class="grid size-12 place-items-center rounded-xl bg-cyan/15 text-glow"><Icon name="panel" class="size-6" /></span>
+        <p class="eyebrow mt-6">Electrical Panel Upgrades</p>
+        <h2 class="mt-3 text-3xl font-extrabold text-white">More Power. More Possibility.</h2>
+        <p class="mt-4 flex-1 leading-relaxed text-muted">As homes and businesses add EV chargers, appliances, remodels, solar, and workshops, the existing panel may need attention. A panel upgrade isn't automatically required. We assess the equipment, capacity, and condition, then explain the practical options clearly.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/request-estimate?service=electrical_panel_upgrade" class="btn btn-primary">Request a Panel Assessment</a>
+          <a href="/electrical-panel-upgrades" class="btn btn-ghost">Learn More</a>
+        </div>
+      </article>
+      <article class="card relative flex flex-col overflow-hidden p-8 sm:p-10" data-reveal style="--reveal-delay:100ms">
+        <div class="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-electric/20 blur-3xl"></div>
+        <span class="grid size-12 place-items-center rounded-xl bg-electric/15 text-glow"><Icon name="building" class="size-6" /></span>
+        <p class="eyebrow mt-6">Commercial EV Charging</p>
+        <h2 class="mt-3 text-3xl font-extrabold text-white">Prepare Your Property For What's Next.</h2>
+        <p class="mt-4 leading-relaxed text-muted">Commercial charging is more than equipment selection. It's power availability, site conditions, future growth, user needs, and installation logistics. We help decision-makers start with the right questions.</p>
+        <ul class="mt-6 flex flex-1 flex-wrap content-start gap-2">
+          {commercialFor.map((c) => <li class="rounded-full border border-line bg-white/[0.03] px-3 py-1.5 text-xs font-semibold text-ink/85">{c}</li>)}
+        </ul>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/commercial-assessment" class="btn btn-primary">Schedule a Site Assessment</a>
+          <a href="/commercial-ev-charging" class="btn btn-ghost">Learn More</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="border-t border-line bg-deep/40"><HowItWorks /></div>
+
+  <ProofSection />
+
+  <!-- ================= FAQ ================= -->
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <SectionHeading eyebrow="FAQ" title="Straight answers before you commit." intro="The details that matter most when you're planning EV charging or an electrical upgrade." />
+        <a href="/faq" class="btn btn-ghost mt-8" data-reveal>See All FAQs <Icon name="arrow" class="size-4" /></a>
+      </div>
+      <div data-reveal><FaqAccordion items={homeFaqs} /></div>
+    </div>
+  </section>
+
+  <FinalCta />
+</BaseLayout>
+
+<script>
+  const v = document.getElementById("hero-reel") as HTMLVideoElement | null;
+  const replay = document.getElementById("hero-replay");
+  if (v && replay) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      v.removeAttribute("autoplay");
+      v.pause();
+      replay.classList.remove("hidden");
+      replay.textContent = "Play ▶";
+    }
+    v.addEventListener("ended", () => replay.classList.remove("hidden"));
+    replay.addEventListener("click", () => { v.currentTime = 0; v.play(); replay.classList.add("hidden"); });
+  }
+</script>

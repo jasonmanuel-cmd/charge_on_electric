@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FormPageLayout from "../components/FormPageLayout.astro";
+import LeadForm from "../components/LeadForm.astro";
+---
+<BaseLayout
+  title="Commercial EV Charging Site Assessment | Charge On Electric"
+  description="Schedule a commercial EV charging site assessment for your business, multifamily property, fleet, or retail location in Bakersfield."
+  breadcrumbs={[{ name: "Commercial EV Charging", href: "/commercial-ev-charging" }, { name: "Site Assessment", href: "/commercial-assessment" }]}
+>
+  <FormPageLayout
+    eyebrow="Commercial Site Assessment"
+    title="Prepare Your Property For What's Next."
+    intro="Tell us about the site and what you're planning. We'll review the details and follow up to schedule an assessment of power availability, parking layout, and installation logistics."
+    bullets={[
+      "Workplaces, multifamily, retail, hospitality, fleets, and dealerships",
+      "Planning for current and future charging spaces",
+      "Clear scope, project variables, and phasing options",
+    ]}
+    aside={{ title: "Plans help", body: "Site plans, parking-area photos, and photos of the main electrical room let us prepare before the walkthrough." }}
+  >
+    <LeadForm variant="commercial" />
+  </FormPageLayout>
+</BaseLayout>

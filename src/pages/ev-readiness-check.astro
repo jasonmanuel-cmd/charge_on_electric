@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FormPageLayout from "../components/FormPageLayout.astro";
+import LeadForm from "../components/LeadForm.astro";
+---
+<BaseLayout
+  title="EV Readiness Check: Is Your Home Ready for EV Charging? | Charge On Electric"
+  description="Find out what your Bakersfield home needs for Level 2 EV charging. Answer a few questions, send a panel photo, and Charge On Electric will help you understand the next step."
+  breadcrumbs={[{ name: "EV Readiness Check", href: "/ev-readiness-check" }]}
+>
+  <FormPageLayout
+    eyebrow="EV Readiness Check"
+    title="Is Your Home Ready For EV Charging?"
+    intro="You don't need to know your panel size, charger type, wiring route, or electrical capacity before contacting us. Tell us about your home, your vehicle, and where you plan to charge, and we'll help you understand the next step."
+    bullets={[
+      "Find out what information matters before installing a charger",
+      "Identify whether the existing panel may need evaluation",
+      "Understand common installation variables",
+      "Get a clearer picture before committing to a project",
+    ]}
+    aside={{ title: "The single most useful photo", body: "Open your electrical panel door and take a clear photo showing the breakers and the main breaker label. That tells us more than any number." }}
+  >
+    <LeadForm variant="ev_readiness" />
+  </FormPageLayout>
+</BaseLayout>
