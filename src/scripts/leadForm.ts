@@ -22,7 +22,7 @@ function fieldError(el: HTMLInputElement | HTMLSelectElement | HTMLTextAreaEleme
   return el.validationMessage;
 }
 
-function setError(el: HTMLElement & { name: string }, msg: string | null) {
+function setError(el: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement, msg: string | null) {
   const container = (el.closest("fieldset:not(.step)") as HTMLElement) || el.parentElement!;
   const id = `${el.id || el.name}-error`;
   let node = container.querySelector<HTMLElement>(`[data-error-for="${el.name}"]`);
@@ -132,6 +132,18 @@ function initForm(form: HTMLFormElement) {
     const t = e.target as HTMLInputElement;
     if (t.name === "service_type") track("select_service_type", { service_type: t.value, form_id: formId });
     if (t.type === "radio" && t.checkValidity()) setError(t, null);
+  });
+
+  // Keyboard "Next"/Enter moves through fields instead of submitting early.
+  form.addEventListener("keydown", (e) => {
+    const t = e.target as HTMLElement;
+    if (e.key !== "Enter" || t.tagName !== "INPUT" || (t as HTMLInputElement).type === "checkbox") return;
+    e.preventDefault();
+    const fields = Array.from(steps[current].querySelectorAll<HTMLElement>("input:not([type=hidden]):not([type=radio]):not([type=file]), select, textarea"));
+    const next = fields[fields.indexOf(t) + 1];
+    if (next) next.focus();
+    else if (current < steps.length - 1) nextBtn.click();
+    else (t as HTMLInputElement).blur();
   });
 
   nextBtn.addEventListener("click", () => {

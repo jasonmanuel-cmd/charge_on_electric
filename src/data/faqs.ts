@@ -57,6 +57,13 @@ export const faqs: FAQ[] = [
     tags: ["ev", "home"],
   },
   {
+    id: "rebates",
+    question: "Are there rebates for home EV chargers in Los Angeles?",
+    answer:
+      "Utilities serving the Los Angeles area, including LADWP and Southern California Edison, have offered rebates for home EV chargers and related electrical work. Programs, amounts, and eligibility change often and depend on which utility serves your address, so we'll help you check what currently applies before you buy equipment.",
+    tags: ["ev", "home"],
+  },
+  {
     id: "business",
     question: "Do you work with businesses and property managers?",
     answer:

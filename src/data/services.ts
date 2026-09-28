@@ -86,7 +86,7 @@ export const services: ServicePage[] = [
     permitNote:
       "Permit and inspection requirements depend on your jurisdiction and project scope. We identify what applies to your installation as part of the estimate rather than guessing up front.",
     photoTip: "Send photos of your electrical panel (door open, labels visible) and the spot where you want to charge for a faster first look.",
-    faqs: faqsByTag("ev"),
+    faqs: faqsByTag("ev", 8),
     relatedServiceSlugs: ["electrical-panel-upgrades", "commercial-ev-charging"],
     serviceType: "ev_charger_installation",
     status: "published",
@@ -161,7 +161,7 @@ export const services: ServicePage[] = [
     heroHeadline: "Prepare Your Property For What's Next.",
     heroSubheadline:
       "Commercial charging is more than equipment selection. It's power availability, site conditions, user needs, and room to grow. We help you start with the right questions.",
-    primaryCta: { label: "Schedule a Commercial Site Assessment", href: "/commercial-assessment" },
+    primaryCta: { label: "Schedule a Site Assessment", href: "/commercial-assessment" },
     secondaryCta: { label: "Talk to an Electrician", href: "/contact" },
     directAnswer: {
       heading: "A realistic path from idea to operating chargers",

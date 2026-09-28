@@ -37,7 +37,7 @@ const values = [
       <div class="card relative overflow-hidden p-8" data-reveal>
         <div class="grid-bg pointer-events-none absolute inset-0"></div>
         <div class="relative">
-          <img src="/media/logo.webp" alt={business.legalName} width="640" height="154" loading="lazy" class="w-full" style="mix-blend-mode: screen" />
+          <img src="/media/logo.webp" alt={business.legalName} width="640" height="154" loading="lazy" class="w-full" />
           <ul class="mt-8 space-y-4">
             {licenseVisible() && <li class="flex gap-3"><Icon name="shield" class="size-5 shrink-0 text-glow" /><span>CSLB {business.license.classification} License #{business.license.number}</span></li>}
             <li class="flex gap-3"><Icon name="home" class="size-5 shrink-0 text-glow" /><span>Residential &amp; commercial electrical work</span></li>

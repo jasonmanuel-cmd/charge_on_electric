@@ -4,7 +4,8 @@ import vercel from "@astrojs/vercel";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
-const site = process.env.PUBLIC_SITE_URL || "https://www.chargeonelectric.com";
+// Set PUBLIC_SITE_URL in Vercel once a custom domain is connected.
+const site = process.env.PUBLIC_SITE_URL || "https://charge-on-electric.vercel.app";
 
 // Routes that must never appear in the sitemap (noindex pages).
 const EXCLUDE_FROM_SITEMAP = ["/thank-you"];
