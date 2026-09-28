@@ -1,6 +1,6 @@
 # Charge On Electric: Website & Lead System
 
-Lead-generation website for **Charge On Electric Inc.** (Bakersfield, CA): EV charger installation, electrical panel upgrades, commercial EV charging, and electrical services.
+Lead-generation website for **Charge On Electric Inc.** (Los Angeles, CA): EV charger installation, electrical panel upgrades, commercial EV charging, and electrical services.
 
 Built with **Astro 7 + Tailwind CSS 4**, deployed on **Vercel**, leads stored in **Supabase**, notifications via **Resend**.
 
@@ -34,7 +34,7 @@ Anything unconfirmed stays `null`/`false` in `business.ts`, and the UI **hides i
 - **License**: `1156860 (C-10)` is pre-filled from the company Instagram bio but `verified: false`, so it's hidden. Confirm it at the [CSLB license lookup](https://www.cslb.ca.gov/OnlineServices/CheckLicenseII/CheckLicense.aspx), then set `verified: true`. **California law requires the license number in contractor advertising, so do this before launch.**
 - **Insured / reviews / rating / hours / warranty / financing**: hidden until set.
 - **Projects & reviews**: empty arrays render honest "coming soon" states. Projects only publish when every photo has alt text and `consentVerified: true`.
-- **Service areas**: Bakersfield only. The Instagram bio says "Servicing Southern California", but per the spec that claim stays off the site until there's operational proof.
+- **Service areas**: Los Angeles and the surrounding area (`areaServed` + `serviceZipPrefixes` in `business.ts`). Add a dedicated `/service-areas/<city>` page only with genuinely local copy.
 
 ## Lead pipeline
 
@@ -62,7 +62,7 @@ Set `PUBLIC_GTM_ID` (and optionally `PUBLIC_CLARITY_PROJECT_ID`). Google Consent
 
 ## Pages
 
-`/` · `/services` · `/ev-charger-installation` · `/electrical-panel-upgrades` · `/commercial-ev-charging` · `/electrical-services` · `/how-it-works` · `/projects` (+ `/projects/[slug]`) · `/reviews` · `/about` · `/credentials` · `/service-areas` (+ `/service-areas/bakersfield`) · `/faq` · `/request-estimate` · `/ev-readiness-check` · `/commercial-assessment` · `/contact` · `/thank-you` (noindex) · `/privacy-policy` · `/terms-of-service` · `/accessibility` · `404` · `sitemap-index.xml` · `robots.txt`
+`/` · `/services` · `/ev-charger-installation` · `/electrical-panel-upgrades` · `/commercial-ev-charging` · `/electrical-services` · `/how-it-works` · `/projects` (+ `/projects/[slug]`) · `/reviews` · `/about` · `/credentials` · `/service-areas` (+ `/service-areas/los-angeles`) · `/faq` · `/request-estimate` · `/ev-readiness-check` · `/commercial-assessment` · `/contact` · `/thank-you` (noindex) · `/privacy-policy` · `/terms-of-service` · `/accessibility` · `404` · `sitemap-index.xml` · `robots.txt`
 
 Structured data: `Electrician` (verified fields only), `Service`, `FAQPage`, `BreadcrumbList`.
 

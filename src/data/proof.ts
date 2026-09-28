@@ -8,7 +8,7 @@ export type Project = {
   slug: string;
   title: string;
   serviceType: string;
-  area: string; // general area only, e.g. "Northwest Bakersfield"
+  area: string; // general area only, e.g. "Silver Lake, Los Angeles"
   need: string;
   assessment: string;
   work: string;
