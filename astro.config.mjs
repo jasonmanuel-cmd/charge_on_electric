@@ -13,7 +13,11 @@ const EXCLUDE_FROM_SITEMAP = ["/thank-you"];
 export default defineConfig({
   site,
   output: "static",
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+  }),
   trailingSlash: "never",
   redirects: {
     // Site briefly launched with the wrong home city.
